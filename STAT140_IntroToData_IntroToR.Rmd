@@ -1,0 +1,21 @@
+---
+title: "Introduction to data/Introduction to R"
+subtitle: "STAT 140"
+author: "Marie Ozanne"
+date: "September 4-6, 2019"
+output: word_document
+---
+
+## Class Activity - Introduction to data
+
+For this activity, you will collect information from each of your classmates and store those data in an Excel spreadsheet. Find out the name, age, class year, height, and two other pieces of information about *each* of your classmates. Make sure you collect the same information on each person and that you include the same information about yourself. Use your best judgement on how to organize what you collect - you will not be assessed on whether you are "right" or "wrong", but rather we will use this exercise as an opportunity to explore how to store data in this class. 
+
+## Class Activity - Introduction to R
+
+1. Download R: https://cran.r-project.org/
+2. Download R Studio (Desktop, Open Source License): https://www.rstudio.com/products/rstudio/download/
+3. Open this 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
