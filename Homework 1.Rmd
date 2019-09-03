@@ -1,0 +1,52 @@
+---
+title: 'STAT 140: Homework 1'
+author: "YOUR NAME HERE"
+date: "Due Date: Wednesday, 9/11/2019"
+output:
+  word_document: default
+---
+
+## PROJECT
+
+Identify a research question that you are interested in investigating, and a corresponding data set that can be used to investigate your question. You will be exploring the question and data throughout the semester, and you will use them for your final paper. If you are having trouble finding data, possible resources include, but are not limited to:
+
+- http://www.data.gov
+- https://github.com/fivethirtyeight/data
+- https://www.cdc.gov/nchs
+- http://jse.amstat.org
+
+If you find data as part of a research article, please formulate your own questio to investigate that is different from that used in the article.
+
+If you work in a research lab and collect data yourself, you may use that data for your project, as long as you have permission from your professor (for that lab). 
+
+**Come see me if you are having problems identifying a research question/data set.**
+
+#### Questions
+
+1) What is your research question?
+
+2) What is the population of interest?
+
+3) Where did you find your data?
+
+4) Describe how your data arose.
+
+5) How were the data collected? 
+
+6) Who are the subjects in this study? How many are included (use R for this part)?
+
+```{r Q6}
+
+```
+
+7) What variables are present in your data set?
+
+```{r Q7}
+
+```
+
+8) Is there any missing data? If so, do you know why it is missing?
+
+```{r Q8}
+
+```
