@@ -36,7 +36,7 @@ When we use R Markdown, we can include a combination of text, equations, and R c
 
 Some of the functionality of R is built into your computer now that you have downloaded R and RStudio, but some of it relies on external files called "packages" that can be downloaded from CRAN R. If you need any packages to make plots, for example, you should load these files in your setup chunk. You can also load data sets in this chunk.
 
-Notice that I names this chunk setup2, rather than setup. If you wish, you can rename it as setup and try to knit your document (press the Knit button above) - what happens?
+Notice that I named this chunk setup2, rather than setup. If you wish, you can rename it as setup and try to knit your document (press the Knit button above) - what happens?
 
 There are some packages that we will need that do not come preloaded with R. You can install them by navigating to the Packages tab, hitting Install, and specifying the package that you want to install. This is only necessary for packages that are not built into R. I will tell you if you need to install a package, so don't worry too much about this. Below, we will need to install ggplot2, a popular data visualization package. You only need to install ggplot2 once, so the next time you need to use this package (and you're working on the same computer), you do not need to perform this step. After the package is installed, you load it using the library() function.
 
