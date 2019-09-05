@@ -14,8 +14,9 @@ Identify a research question that you are interested in investigating, and a cor
 - https://github.com/fivethirtyeight/data
 - https://www.cdc.gov/nchs
 - http://jse.amstat.org
+- http://data.un.org/
 
-If you find data as part of a research article, please formulate your own questio to investigate that is different from that used in the article.
+If you find data as part of a research article, please formulate your own question to investigate that is different from that used in the article.
 
 If you work in a research lab and collect data yourself, you may use that data for your project, as long as you have permission from your professor (for that lab). 
 
@@ -33,7 +34,9 @@ If you work in a research lab and collect data yourself, you may use that data f
 
 5) How were the data collected? 
 
-6) Who are the subjects in this study? How many are included (use R for this part)?
+6) Who are the subjects in this study? 
+
+7) How many individuals (subjects) are included (use R for this part)? Hint: consider the functions we used to explore data in our second class meeting.
 
 ```{r Q6}
 
@@ -45,7 +48,7 @@ If you work in a research lab and collect data yourself, you may use that data f
 
 ```
 
-8) Is there any missing data? If so, do you know why it is missing?
+8) Is there any missing data? If so, do you know why it is missing? Hint: missing data will often be read in as NA, but sometimes people use other ways to denote that an observation is missing (e.g. any dots (.) where you don't expect them?)
 
 ```{r Q8}
 
