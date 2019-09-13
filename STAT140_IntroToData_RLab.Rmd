@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Data"
+title: "Introduction to R and RStudio"
 subtitle: "OpenIntro Lab"
 output:
   pdf_document: default
@@ -67,7 +67,7 @@ R has some powerful functions for making graphics. We can create a simple plot o
 plot(x=arbuthnot$year, y=arbuthnot$girls)
 ```
 
-Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, load the ggplot2 package and then make the same plot using ggplot().
+Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, make the same plot using ggplot().
 
 ```{r ggplot year girls}
 
@@ -79,7 +79,7 @@ By default, R creates a scatterplot with each x,y pair indicated by an open circ
 plot(x = arbuthnot$year, y = arbuthnot$girls, type = "l")
 ```
 
-Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, load the ggplot2 package and then make the same plot using ggplot().
+Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, make the same plot using ggplot().
 
 ```{r ggplot line year girls}
 
@@ -116,7 +116,7 @@ plot(arbuthnot$year, arbuthnot$boys + arbuthnot$girls, type = "l")
 
 This time, note that we left out the names of the first two arguments. We can do this because the help file shows that the default for plot is for the first argument to be the x-variable and the second argument to be the y-variable.
 
-Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, load the ggplot2 package and then make the same plot using ggplot(). You will need to use the total variable from the arbuthnot data, rather than the sum of boys and girls for ggplot().
+Note that we could accomplish the same thing using the ggplot() function from the ggplot2 package. In the chunk below, make the same plot using ggplot(). You will need to use the total variable from the arbuthnot data, rather than the sum of boys and girls for ggplot().
 
 ```{r ggplot line year total baptisms}
 
