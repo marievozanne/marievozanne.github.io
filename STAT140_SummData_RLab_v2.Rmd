@@ -1,0 +1,178 @@
+---
+title: "Introduction to Data"
+subtitle: "OpenIntro Lab"
+output: pdf_document
+---
+
+*This includes lab materials available in the Introduction to Data Lab available through OpenIntro, which was adapted for OpenIntro by Andrew Bray and Mine Cetinkaya-Rundel from a lab written by Mark Hansen of UCLA Statistics. The lab is available at* \href{"http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/intro_to_data/intro_to_data.html"}{OpenIntro: Introduction to Data}. 
+
+## Overview
+
+The Behavioral Risk Factor Surveillance System (BRFSS) is an annual telephone survey of 350,000 people in the United States. As its name implies, the BRFSS is designed to identify risk factors in the adult population and report emerging health trends. For example, respondents are asked about their diet and weekly physical activity, their HIV/AIDS status, possible tobacco use, and even their level of healthcare coverage. The BRFSS Web site (http://www.cdc.gov/brfss) contains a complete description of the survey, including the research questions that motivate the study and many interesting results derived from the data.
+
+We will focus on a random sample of 20,000 people from the BRFSS survey conducted in 2000. While there are over 200 variables in this data set, we will work with a small subset.
+
+## Setup
+
+We begin by loading the data set of 20,000 observations into the R workspace. These data are available on through the OpenIntro website at http://www.openintro.org/stat/data/cdc.R. \textbf{Insert an R chunk below, name it appropriately, and use the source() function and to load these data into R. Remember to use quotes where appropriate within the source() function. In your R chunk, include a comment about what you are doing in this chunk.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+Once you have loaded the data, the data set cdc will show up in your workspace. This is a \emph{data matrix}, with each row representing a \emph{case} and each column representing a \emph{variable}. R calls this data format a \emph{data frame}, which is a term that will be used regularly in this course. 
+
+\textbf{Use the names() function to determine the names of the variables in cdc. You will need to insert an R chunk below, name it appropriately, and include a comment in the code chunk about what you are doing.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+This returns the names genhlth, exerany, hlthplan, smoke100, height, weight, wtdesire, age, and gender. Each one of these variables corresponds to a question that was asked in the survey. For example, for genhlth, respondents were asked to evaluate their general health, responding either excellent, very good, good, fair or poor. The exerany variable indicates whether the respondent exercised in the past month (1) or did not (0). Likewise, hlthplan indicates whether the respondent had some form of health coverage (1) or did not (0). The smoke100 variable indicates whether the respondent had smoked at least 100 cigarettes in her lifetime. The other variables record the respondent’s height in inches, weight in pounds as well as their desired weight, wtdesire, age in years, and gender.
+
+### Exercise 1
+
+\textbf{How many cases are there in this data set? For each variable, identify its data type (e.g. categorical, discrete). You will need to insert an R chunk below, name it appropriately, and include comments in the code chunk to describe what you are doing. You can include text after the R chunk to summarize your findings.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+Recall, we can look at the first few entries (rows) of our data by using the head() function. By default, this will print the first 6 rows of the data frame. There is, however, an argument you can include to print a different number of rows. Consult the help filr for head() by typing ?head into your console. \textbf{Using the help file, write a line of code that prints the first 10 rows of the cdc data frame. Then, print the last 8 rows of the data frame using the tail() function. You will need to insert an R chunk below, name it appropriately, and include comments in the code chunk to describe what you are doing.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+You could also look at all of the data frame at once by typing its name into the console, but that might be unwise here. We know cdc has 20,000 rows, so viewing the entire data set would mean flooding your screen. It’s better to take small peeks at the data with head, tail or the subsetting techniques that you’ll learn in a moment.
+
+## Relationships between two numerical variables
+
+Suppose you are interested in the relationship between current weight and desired weight in the United States. \textbf{Use the cdc data to investigate this graphically, employing the appropriate variables and graph. Make your chosen graph first using the plot() function and then using the ggplot() function.}
+
+The plot function includes arguments for xlab and ylab, which correspond to the labels for the x and y axes, respectively. By default, the labels are the variable names, but this doesn't always look very professional. \textbf{Add the arguments xlab="my axis title" and ylab="my axis title" to your plot command, replacing the phrase 'my axis title' with the appropriate variable names.} Remember that all arguments for the plot() function are separated by a comma.
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+We can also change the axis labels for the ggplot() function. Recall that ggplot works with layers. When we want to change the x and y axis labels, we add xlab("my axis title") and ylab("my axis title") to our line of code, where each additional layer is separated by a + sign. \textbf{Add the same labels you did in when using plot() to your ggplot.} Do you see the difference in syntax?
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+We might expect that general health is related to weight and desired weight. In the cdc data set, there is a categorical variable for general health, called \texttt{genhlth}. We can add this variable to our plot in the form of color by adding an aesthetic component inside parentheses of the geom_point() component of your previous code. This piece has the form: aes(color=genhlth). \textbf{Add this to your code in a separate R chunk. What does this do? Do you think that this is an informative addition to the plot?}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+## Distribution Shape and Modality
+
+Now, we will examine the distribution of each of the weight variables separately. We can make a frequency histogram in R using the function hist(). Here is an example using the (current) weight variable. There are several arguments that we specify in this function. In addition to a single variable, we include the argument breaks. This controls the number of bins. Play around with this and choose a suitable value for this variable. Other arguments rename the axis labels and the title (main), respectively.
+
+```{r current weight hist}
+
+```
+
+Histograms can also be generated using the ggplot2 package. Pay attention to how the syntax differs when we use ggplot instead. Here, binwidth controls the width of the bins. Play with it and find a suitable value. 
+
+```{r current weight geom_histogram}
+
+```
+
+\textbf{Repeat these two coding exercises with the wtdesire variable. }
+
+
+\textbf{Describe the shape and modality for the (a) histogram for weight and the (b) histogram for wtdesire. }
+
+
+
+\textbf{What did you learn about potential data entry errors in the scatterplot that we do not see in the separate histograms?}
+
+
+
+## Outliers
+
+\textbf{Do you see any potential outliers in your previous plots? Which ones might be extreme but legitimate? Which ones might be data entry errors?} (No R required to answer this part.)
+
+Boxplots allow us to easily determine whether potential outliers exist. They also allow us to comment on whether the distribution is symmetric or skewed. You can use the boxplot() function to create a boxplot. \textbf{Create boxplots for weight and wtdesire. Comment on the existence of potential outliers and the skew of the distributions for each of the variables.}
+
+```{r weight boxplots}
+
+```
+
+
+## Summaries and tables
+
+The BRFSS questionnaire is a massive trove of information. A good first step in any analysis is to distill all of that information into a few summary statistics and graphics. As a simple example, the function summary returns a numerical summary: minimum, first quartile, median, mean, third quartile, and maximum. For weight this is
+
+```{r simple summary cdc}
+summary(cdc$weight)
+```
+
+R also functions like a very fancy calculator. \textbf{Using the appropriate summary statistics from the summary() output above, calculate the interquartile range for respondents' weight by hand. You will need to insert an R chunk below, name it appropriately, and include a comment in the code chunk to describe what you are doing.} 
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+R also has built-in functions to compute summary statistics one by one. For instance, to calculate the mean, median, variance, and IQR of weight, type
+
+```{r mean median variance weight}
+## Calculate mean
+mean(cdc$weight)
+
+## Calculate median
+median(cdc$weight)
+
+## Calculate variance
+var(cdc$weight)
+
+## Calculate IQR
+IQR(cdc$weight) 
+## should be the same as what you calculated by hand
+## in previous chunk
+
+```
+
+While it makes sense to describe a quantitative variable like weight in terms of these statistics, what about categorical data? We would instead consider the sample frequency or relative frequency distribution. The function table does this for you by counting the number of times each kind of response was given. For example, to see the number of people who have smoked 100 cigarettes in their lifetime, type
+
+```{r table smoke 100 cig lifetime}
+## Table of yes/no counts
+table(cdc$smoke100)
+```
+
+or instead look at the relative frequency distribution by typing
+
+```{r rel freq dist}
+## Make relative frequency table
+table(cdc$smoke100)/20000
+```
+
+Notice how R automatically divides all entries in the table by 20,000 in the command above. This is similar to something we observed in the Introduction to R; when we multiplied or divided a vector with a number, R applied that action across entries in the vectors. As we see above, this also works for tables. Next, we make a bar plot of the entries in the table by putting the table inside the barplot command.
+
+```{r simple barplot nested}
+## Use nested commands to make a barplot
+barplot(table(cdc$smoke100))
+```
+
+Notice what we’ve done here! We’ve computed the table of cdc$smoke100 and then immediately applied the graphical function, barplot. This is an important idea: R commands can be nested. You could also break this into two steps by typing the following:
+
+```{r simple barplot two step}
+## create new object smoke, which is of class table
+class(smoke) ##tells what class of object we have
+smoke <- table(cdc$smoke100)
+
+## create barplot using table object as input
+barplot(smoke)
+```
+
+Here, we’ve made a new object, a table, called \texttt{smoke} (the contents of which we can see by typing smoke into the console) and then used it in as the input for barplot. The special symbol <- performs an assignment, taking the output of one line of code and saving it into an object in your workspace. This is another important idea that we’ll return to later.
+
+### Exercise 2
+
+\textbf{Create a numerical summary for height and age, and compute the interquartile range for each. Compute the relative frequency distribution for \texttt{gender} and \texttt{exerany}. How many males are in the sample? What proportion of the sample reports being in excellent health? You will need to insert an R chunk below, name it appropriately, and include comments in the code chunk to describe what you are doing.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+The table command can be used to tabulate any number of variables that you provide. For example, you could use it to examine which participants have smoked across each gender. You already encountered this use of the table() function in your Homework 2. \textbf{Use the table command to look at the relationship between smoking (use the variable \texttt{smoke100}) and \texttt{gender}. You will need to insert an R chunk below, name it appropriately, and include comments in the code chunk as needed.}
+
+REMOVE THIS TEXT AND INSERT R CHUNK HERE
+
+Here, we see column labels of 0 and 1. Recall that 1 indicates a respondent has smoked at least 100 cigarettes. The rows refer to gender. To create a mosaic plot of this table, we would enter the following command.
+
+```{r mosaic plot smoking}
+mosaicplot(table(cdc$gender, cdc$smoke100))
+```
+
+We could have accomplished this in two steps by saving the table in one line and applying mosaicplot in the next (see the table/barplot example above).
+
+### Exercise 3
+
+\textbf{What does the mosaic plot reveal about smoking habits and gender? Note, this is asking you to interpret the mosaic plot.}
