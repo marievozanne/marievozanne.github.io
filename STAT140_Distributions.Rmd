@@ -1,0 +1,884 @@
+---
+title: "STAT 140"
+author: "Marie Ozanne"
+date: "FALL 2019"
+output: ioslides_presentation
+subtitle: 'Chapter 4: Distributions of Random Variables'
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+library(egg)
+library(ggplot2)
+```
+
+
+## <font size="6"> ANNOUNCEMENTS </font>
+
+<span style="color:red"> Wednesday, October 2 </span>
+
+- **Homework:** Ch. 3 
+- **Quiz:** Ch. 3 - focus on probability properties
+
+<span style="color:red"> Thursday-Friday, October 3-4 </span>
+
+- I will be presenting at the Women in Statistics and Data Science conference. 
+- You will have an R lab to complete - to be turned in and graded for completion.
+
+<span style="color:red"> Thursday-Friday, October 10-11 </span>
+
+- **Midterm I** - Ch. 1-3 (Review Mon-Wed, Oct 7-9)
+
+# Normal Distribution
+
+## <font size="6"> MOTIVATING EXAMPLE </font>
+
+```{r male heights, echo=FALSE, fig.cap="", out.width = '70%', fig.align='center'}
+## Load cdc data
+source("http://www.openintro.org/stat/data/cdc.R")
+
+cdc_m <- cdc[cdc$gender=="m",]
+
+## Create data frame with x (height) and corresponding density
+h_dens <- data.frame(height=as.vector(density(cdc_m$height, adjust = 1.8)$x),
+                y=as.vector(density(cdc_m$height, adjust = 1.8)$y))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(69,0), subset(h_dens, height >= 69 & height <= 73), c(73,0))
+
+## Histogram and density plot with shading!!
+hh <- (ggplot(data=cdc_m, aes(x=height))
+       + geom_histogram(aes(y=..density..), 
+                        binwidth = 1, color="black", fill="lightblue")
+       + geom_density(alpha=0.2, color="red", size=1, adjust=1.8)
+       # + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Height (in)")
+       + ylab("")
+       + ggtitle("US Men's Heights")
+       + stat_function(fun = dnorm,
+                       args = list(mean = mean(cdc_m$height), 
+                                   sd = sd(cdc_m$height)),
+                       color="blue", linetype="dashed",
+                       size=1.1))
+
+hh
+```
+
+- <font size="4"><span style="color:red">Red</span> line - true density </font>
+- <font size="4"><span style="color:blue">Blue</span> dashed line - normal model with mean and SD from observed heights </font>
+
+## <font size="6"> NORMAL DISTRIBUTION </font>
+
+The <span style="color:blue"> normal distribution</span> is the most common distribution in statistics. It has a mean $\mu$ and a standard deviation $\sigma$, which describe it entirely. 
+
+If we assume a random variable $X$ is normally distributed (mean $\mu$, SD $\sigma$), then
+
+- $X\sim N(\mu,\sigma)$
+- Distribution of $X$ is:
+  - Unimodal
+  - Symmetric
+  - "Bell-shaped"
+
+## <font size="6"> NORMAL DISTRIBUTION </font>
+
+```{r diff norm distribution, echo=FALSE, fig.cap="", out.width = '75%', fig.align='center', warning=FALSE}
+
+p1 <- (ggplot(data = data.frame(x = c(-3, 3)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = 0, sd = 1)) 
+       + ylab("") 
+       + theme_bw()
+       + scale_y_continuous(breaks = NULL)
+       + ggtitle("Mean=0, SD=1"))
+
+p2 <- (ggplot(data = data.frame(x = c((-3*5+10), (3*5+10))), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = 10, sd = 5)) 
+       + ylab("") 
+       + theme_bw()
+       + scale_y_continuous(breaks = NULL)
+       + ggtitle("Mean=10, SD=5"))
+
+ggarrange(p1,p2,nrow = 2)
+```
+
+## <font size="6"> HOW DO WE COMPARE NORMAL CURVES? </font>
+
+```{r heights, echo=FALSE, fig.cap="", out.width = '85%', fig.align='center', warning=FALSE}
+## Load cdc data
+source("http://www.openintro.org/stat/data/cdc.R")
+
+cdc_m <- cdc[cdc$gender=="m",]
+cdc_f <- cdc[cdc$gender=="f",]
+
+## Histogram and density plot with shading!!
+hm <- (ggplot(data=cdc_m, aes(x=height))
+       + geom_histogram(aes(y=..density..), 
+                        binwidth = 1, color="black", fill="lightblue")
+       + geom_density(alpha=0.2, color="red", size=1, adjust=1.8)
+       # + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Height (in)")
+       + ylab("")
+       + xlim(c(-3*sd(cdc_m$height)+mean(cdc_m$height),
+                3*sd(cdc_m$height)+mean(cdc_m$height)))
+       + ggtitle("US Men's Heights")
+       + stat_function(fun = dnorm,
+                       args = list(mean = mean(cdc_m$height), 
+                                   sd = sd(cdc_m$height)),
+                       color="blue", linetype="dashed",
+                       size=1.1))
+
+hf <- (ggplot(data=cdc_f, aes(x=height))
+       + geom_histogram(aes(y=..density..), 
+                        binwidth = 1, color="black", fill="green")
+       + geom_density(alpha=0.2, color="red", size=1, adjust=1.8)
+       # + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Height (in)")
+       + ylab("")
+       + xlim(c(-3*sd(cdc_f$height)+mean(cdc_f$height),
+                3*sd(cdc_f$height)+mean(cdc_f$height)))
+       + ggtitle("US Women's Heights")
+       + stat_function(fun = dnorm,
+                       args = list(mean = mean(cdc_f$height), 
+                                   sd = sd(cdc_f$height)),
+                       color="darkgreen", linetype="dashed",
+                       size=1.1))
+
+ggarrange(hm, hf, nrow = 2)
+```
+
+## <font size="6"> STANDARDIZING WITH Z-SCORES </font>
+
+The <span style="color:blue">Z-score </span> of an observation is the number of standard deviations it falls above or below the mean. The Z-score for an observation $x$ that follows a distribution with mean $\mu$ and standard deviation $\sigma$ is computed as:
+
+$$Z=\frac{x-\mu}{\sigma}$$
+
+## <font size="6"> STANDARDIZED NORMAL CURVES - HEIGHTS </font>
+
+```{r std heights, echo=FALSE, fig.cap="", out.width = '85%', fig.align='center', warning=FALSE}
+## Load cdc data
+source("http://www.openintro.org/stat/data/cdc.R")
+
+cdc_m <- cdc[cdc$gender=="m",]
+cdc_f <- cdc[cdc$gender=="f",]
+
+cdc_m$stdhgt <- (cdc_m$height-mean(cdc_m$height))/sd(cdc_m$height)
+cdc_f$stdhgt <- (cdc_f$height-mean(cdc_f$height))/sd(cdc_f$height)
+
+
+## Histogram and density plot with shading!!
+hm <- (ggplot(data=cdc_m, aes(x=stdhgt))
+       + geom_histogram(aes(y=..density..), 
+                        binwidth = 1, color="black", fill="lightblue")
+       + geom_density(alpha=0.2, color="red", size=1, adjust=1.8)
+       # + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Standardized Height (in)")
+       + ylab("")
+       + xlim(c(-3,3))
+       + ggtitle("US Standardized Men's Heights")
+       + stat_function(fun = dnorm,
+                       args = list(mean = mean(cdc_m$stdhgt), 
+                                   sd = sd(cdc_m$stdhgt)),
+                       color="blue", linetype="dashed",
+                       size=1.1))
+
+hf <- (ggplot(data=cdc_f, aes(x=stdhgt))
+       + geom_histogram(aes(y=..density..), 
+                        binwidth = 1, color="black", fill="green")
+       + geom_density(alpha=0.2, color="red", size=1, adjust=1.8)
+       # + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Standardized Height (in)")
+       + ylab("")
+       + xlim(c(-3,3))
+       + ggtitle("US Standardized Women's Heights")
+       + stat_function(fun = dnorm,
+                       args = list(mean = mean(cdc_f$stdhgt), 
+                                   sd = sd(cdc_f$stdhgt)),
+                       color="darkgreen", linetype="dashed",
+                       size=1.1))
+
+ggarrange(hm, hf, nrow = 2)
+```
+
+## <font size="6"> STANDARD NORMAL DISTRIBUTION</font>
+
+The normal distribution with $\mu=0$ and $\sigma=1$ is called the <span style="color:blue">standard normal distribution</span>.
+
+
+```{r std norm distribution, echo=FALSE, fig.cap="", out.width = '75%', fig.align='center', warning=FALSE}
+
+p1 <- (ggplot(data = data.frame(x = c(-3, 3)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = 0, sd = 1)) 
+       + ylab("") 
+       + theme_bw()
+       + scale_y_continuous(breaks = NULL))
+p1
+
+```
+
+## <font size="6"> WHY STANDARDIZE? </font>
+
+- Facilitate comparisons
+  - Percentiles for standardized testing, SAT vs ACT
+  - Percentiles for height and weight for toddlers in different populations
+- Z-scores have a special meaning
+  - number of standard deviations above or below the mean
+
+## <font size="6"> NORMAL DISTRIBUTION - PROBABILITY</font>
+
+If $X \sim N(\mu, \sigma)$, then $X$ is a <span style="color:red">continuous random variable </span> (recall end of Chapter 3 lecture). 
+
+**What does probability mean for a continuous random variable?**
+
+## <font size="6"> NORMAL DISTRIBUTION - PROBABILITY</font>
+
+If $X \sim N(\mu, \sigma)$, then $X$ is a <span style="color:red">continuous random variable </span> (recall end of Chapter 3 lecture). 
+
+**What does probability mean for a continuous random variable?**
+
+- Defined as area under the curve (e.g. $P(69\leq X \leq 73)$):
+
+```{r continuous RV height example3, echo=FALSE, fig.cap="", out.width = '45%', fig.align='center'}
+## Create data frame with x (height) and corresponding density
+h_dens <- data.frame(height=as.vector(density(cdc_m$height, 
+                                              adjust = 1.8)$x),
+                y=as.vector(density(cdc_m$height, adjust = 1.8)$y))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(69,0), subset(h_dens, height >= 69 & height <= 73), c(73,0))
+
+## Histogram and density plot with shading!!
+hh <- (ggplot(data=cdc_m, aes(x=height, y=..density..))
+       + geom_histogram(binwidth = 2, color="black", fill="lightblue")
+       + geom_density(alpha=0.2, color="red", size=1.3, adjust=1.8)
+       + geom_polygon(data = shade, aes(height, y), alpha=0.7, color="blue")
+       + theme_bw()
+       + theme(axis.text.y=element_blank())
+       + xlab("Height (in)")
+       + ylab(""))
+
+hh
+```
+
+## <font size="6"> FINDING TAIL AREAS </font>
+
+How do we find the area under the curve (probability) if $X \sim N(\mu,\sigma)$?
+
+(1) Calculus (not covered in this course)
+(2) **R: pnorm() function**
+(3) **Normal table**
+
+**For (2) and (3), we assume our process follows a normal distribution - this is a MODEL - it is NOT EXACT.** 
+
+## <font size="6"> FINDING TAIL AREAS: R </font>
+
+pnorm() gives us the probability of an observation below a certain value, given an appropriate mean and SD
+
+```{r pnorm example}
+## P(X < 69):
+pnorm(69, mean=mean(cdc_m$height), sd=sd(cdc_m$height))
+
+## P(X < 72):
+pnorm(72, mean=mean(cdc_m$height), sd=sd(cdc_m$height))
+```
+
+## <font size="6"> FINDING TAIL AREAS: TABLE </font>
+
+```{r ztable, echo=FALSE, fig.cap="", out.width = '85%', fig.align='center'}
+knitr::include_graphics("ZTable_snapshot.png")
+```
+
+<a href="http://www.z-table.com/"> Z table </a>
+
+## <font size="6"> PRACTICE </font>
+
+According to the CDC data base, the mean height of US men is `r round(mean(cdc_m$height),2)` inches and the SD is `r round(sd(cdc_m$height),2)` inches. **If we model height (random variable $X$) as normal (with the previously stated mean and variance), what is the probability a male is between 69 and 72 inches tall?**
+
+## <font size="6"> PRACTICE </font>
+
+According to the CDC data base, the mean height of US men is `r round(mean(cdc_m$height),2)` inches and the SD is `r round(sd(cdc_m$height),2)` inches. **If we model height (random variable $X$) as normal (with the previously stated mean and variance), what is the probability a male is between 69 and 72 inches tall?**
+
+<span style="color:red"> 
+Step 1: Draw a picture to identify what you want
+</span>
+
+```{r m_height, echo=FALSE, fig.cap="", out.width = '45%', fig.align='center'}
+## Plot bounds (+/- 3 SD)
+lb <- -3*sd(cdc_m$height)+mean(cdc_m$height)
+ub <- 3*sd(cdc_m$height)+mean(cdc_m$height)
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),
+                                     mean=mean(cdc_m$height),
+                                     sd=sd(cdc_m$height))))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(69,0), subset(dens, x >= 69 & x <= 72), c(72,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mean(cdc_m$height), 
+                                            sd = sd(cdc_m$height))) 
+       + geom_polygon(data = shade, aes(x, y), alpha=0.7, 
+                      color="blue", fill="lightblue")
+       + xlim(c(lb,ub))
+       + xlab("Height (inches)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(69 < X < 72)")
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+## <font size="6"> PRACTICE </font>
+
+<span style="color:red">
+Step 2: Identify what you information you can get
+</span>
+
+<div class="columns-2">
+```{r m_height2, echo=FALSE, fig.cap="", out.width='75%', fig.align='center'}
+## Plot bounds (+/- 3 SD)
+lb <- -3*sd(cdc_m$height)+mean(cdc_m$height)
+ub <- 3*sd(cdc_m$height)+mean(cdc_m$height)
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),
+                                     mean=mean(cdc_m$height),
+                                     sd=sd(cdc_m$height))))
+
+## Subset data and add coordinates to make it shade to y=0
+shade69 <- rbind(c(0,0), subset(dens, x <= 69), c(69,0))
+shade72 <- rbind(c(0,0), subset(dens, x <= 72), c(72,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mean(cdc_m$height), 
+                                            sd = sd(cdc_m$height))) 
+       + geom_polygon(data = shade69, aes(x, y), alpha=0.7, 
+                      color="blue", fill="lightblue")
+       + xlim(c(lb,ub))
+       + xlab("Height (inches)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(X < 69)")
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+```{r Pl69}
+## P(X < 69)
+pnorm(q=69, 
+      mean=mean(cdc_m$height), 
+      sd=sd(cdc_m$height))
+```
+
+```{r test R, echo=FALSE, fig.cap="", out.width='75%', fig.align='center'}
+## Normal density plot with shading!!
+p2 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mean(cdc_m$height), 
+                                            sd = sd(cdc_m$height))) 
+       + geom_polygon(data = shade72, aes(x, y), alpha=0.7, 
+                      color="blue", fill="lightblue")
+       + xlim(c(lb,ub))
+       + xlab("Height (inches)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(X < 72)")
+       + scale_y_continuous(breaks = NULL))
+p2
+```
+```{r Pl72}
+## P(X < 72)
+pnorm(q=72, 
+      mean=mean(cdc_m$height), 
+      sd=sd(cdc_m$height))
+```
+
+</div>
+
+## <font size="6"> PRACTICE </font>
+
+<span style="color:red">
+Step 3: Connect what we have to what we want
+</span>
+
+Both pnorm() and the Z table give lower tail probabilities. To get what we want:
+
+</span style="color:red">
+<font size="4">
+$$P(69 \leq X \leq 72)=P(X\leq 72)-P(X\leq 69)=0.7914-0.3387=0.4527$$
+</font>
+<!-- `r 0.7914-0.3387 ` -->
+</span>
+
+```{r m_height3, echo=FALSE, fig.cap="", out.width = '45%', fig.align='center'}
+## Plot bounds (+/- 3 SD)
+lb <- -3*sd(cdc_m$height)+mean(cdc_m$height)
+ub <- 3*sd(cdc_m$height)+mean(cdc_m$height)
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),
+                                     mean=mean(cdc_m$height),
+                                     sd=sd(cdc_m$height))))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(69,0), subset(dens, x >= 69 & x <= 72), c(72,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mean(cdc_m$height), 
+                                            sd = sd(cdc_m$height))) 
+       + geom_polygon(data = shade, aes(x, y), alpha=0.7, 
+                      color="blue", fill="lightblue")
+       + xlim(c(lb,ub))
+       + xlab("Height (inches)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(69 < X < 72)")
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+<!-- ## <font size="6"> PRACTICE </font> -->
+
+<!-- According to the CDC data base, the mean height of US men is `r round(mean(cdc_m$height),2)` inches and the SD is `r round(sd(cdc_m$height),2)` inches. **If we model height (random variable $X$) as normal (with the previously stated mean and variance), what is the probability a male is between 69 and 72 inches tall?** -->
+
+<!-- **<span style="color:red">First, draw a picture!</span>** Then, write notation and find the number. -->
+
+<!-- </span style="color:red"> -->
+<!-- <font size="5"> -->
+<!-- $$P(69 \leq X \leq 72)=P(X\leq 72)-P(X\leq 69)=0.7914-0.3387=$$`r 0.7914-0.3387 ` -->
+<!-- </font> -->
+<!-- </span> -->
+
+## <font size="6"> PRACTICE </font> 
+
+<font size="5">
+At Heinz ketchup factory the amounts which go into bottles of ketchup are supposed to be normally distributed with mean 36 oz. and standard deviation 0.11 oz. Once every 30 minutes a bottle is selected from the production line, and its contents are noted precisely. If the amount of ketchup in the bottle is below 35.8 oz. or above 36.2 oz., then the bottle fails the quality control inspection. **What percent of bottles have less than 35.8 ounces of ketchup?**
+</font>
+
+## <font size="6"> PRACTICE </font> 
+
+<font size="5">
+At Heinz ketchup factory, the amounts which go into bottles of ketchup are supposed to be normally distributed with mean 36 oz. and standard deviation 0.11 oz. Once every 30 minutes a bottle is selected from the production line, and its contents are noted precisely. If the amount of ketchup in the bottle is below 35.8 oz. or above 36.2 oz., then the bottle fails the quality control inspection. **What percent of bottles have less than 35.8 ounces of ketchup?**
+</font>
+
+```{r Heinz fail low pic, echo=FALSE, fig.cap="", out.width = '40%', fig.align='center'}
+## Plot bounds (+/- 3 SD)
+lb <- -3*0.11+36
+ub <- 3*0.11+36
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),mean=36,sd=0.11)))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(0,0), subset(dens, x <= 35.8), c(35.8,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = 36, sd = 0.11)) 
+       + geom_polygon(data = shade, aes(x, y), alpha=0.7, color="red", fill="pink")
+       + xlim(c(lb,ub))
+       + xlab("Ketchup bottle volume (oz)")
+       + ylab("") 
+       + theme_bw()
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+
+## <font size="6"> PRACTICE </font> 
+
+<font size="5">
+At Heinz ketchup factory, the amounts which go into bottles of ketchup are supposed to be normally distributed with mean 36 oz. and standard deviation 0.11 oz. Once every 30 minutes a bottle is selected from the production line, and its contents are noted precisely. If the amount of ketchup in the bottle is below 35.8 oz. or above 36.2 oz., then the bottle fails the quality control inspection. **What percent of bottles have less than 35.8 ounces of ketchup?**
+</font>
+
+```{r Heinz, echo=FALSE, fig.cap="", out.width = '40%', fig.align='center'}
+## P(X < 35.8)
+prob <- pnorm(q=35.8, mean=36, sd=0.11)
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = 36, sd = 0.11)) 
+       + geom_polygon(data = shade, aes(x, y), alpha=0.7, color="red", fill="pink")
+       + xlim(c(lb,ub))
+       + xlab("Ketchup bottle volume (oz)")
+       + ylab("") 
+       + theme_bw()
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+<font size="5">
+$P(X<35.8)=P(X\leq 35.8)=$ </font> `r pnorm(q=35.8, mean=36, sd=0.11)`
+
+## <font size="6"> PRACTICE </font>
+
+What percent of bottles **pass** quality control inspection?
+
+## <font size="6"> PRACTICE </font>
+
+What percent of bottles **pass** quality control inspection?
+
+```{r ketchup_qc0, echo=FALSE, fig.cap="", out.width='75%', fig.align='center'}
+mu <- 36
+sigma <- 0.11
+
+## Plot bounds (+/- 3 SD)
+lb <- -3*sigma+mu
+ub <- 3*sigma+mu
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),
+                                     mean=mu,
+                                     sd=sigma)))
+
+## Subset data and add coordinates to make it shade to y=0
+shade <- rbind(c(35.8,0), subset(dens, x >= 35.8 & x <= 36.2), c(36.2,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mu, 
+                                            sd = sigma)) 
+       + geom_polygon(data = shade, aes(x, y), alpha=0.7, color="red", fill="pink")
+       + xlim(c(lb,ub))
+       + xlab("Ketchup bottle volume (oz)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(35.8 < X < 36.2)")
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+## <font size="6"> PRACTICE </font>
+
+What percent of bottles **pass** quality control inspection?
+
+<div class="columns-2">
+```{r ketchup_qc, echo=FALSE, fig.cap="", out.width='75%', fig.align='center'}
+mu <- 36
+sigma <- 0.11
+
+## Plot bounds (+/- 3 SD)
+lb <- -3*sigma+mu
+ub <- 3*sigma+mu
+
+dens <- data.frame(x=seq(lb,ub,length=101),
+                   y=as.vector(dnorm(x=seq(lb,ub,length=101),
+                                     mean=mu,
+                                     sd=sigma)))
+
+## Subset data and add coordinates to make it shade to y=0
+shadel <- rbind(c(0,0), subset(dens, x <= 35.8), c(35.8,0))
+shadeu <- rbind(c(0,0), subset(dens, x <= 36.2), c(36.2,0))
+
+## Normal density plot with shading!!
+p1 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mu, 
+                                            sd = sigma)) 
+       + geom_polygon(data = shadel, aes(x, y), alpha=0.7, color="red", fill="pink")
+       + xlim(c(lb,ub))
+       + xlab("Ketchup bottle volume (oz)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(X < 35.8)")
+       + scale_y_continuous(breaks = NULL))
+p1
+```
+
+```{r ketchup_qc2, echo=FALSE, fig.cap="", out.width='75%', fig.align='center'}
+## Normal density plot with shading!!
+p2 <- (ggplot(data = data.frame(x = c(lb, ub)), aes(x)) 
+       + stat_function(fun = dnorm, 
+                       n = 101, args = list(mean = mu, 
+                                            sd = sigma)) 
+       + geom_polygon(data = shadeu, aes(x, y), alpha=0.7, color="red", fill="pink")
+       + xlim(c(lb,ub))
+       + xlab("Ketchup bottle volume (oz)")
+       + ylab("") 
+       + theme_bw()
+       + ggtitle("P(X < 36.2)")
+       + scale_y_continuous(breaks = NULL))
+p2
+```
+
+</div>
+
+```{r Heinz2}
+## P(X < 36.2)-P(X < 35.8)
+pnorm(q=36.2, mean=36, sd=0.11)-pnorm(q=35.8, mean=36, sd=0.11)
+```
+
+<!-- ## <font size="6"> IS IT NORMAL? </font> -->
+
+<!-- ```{r norm approx binom, echo=FALSE} -->
+<!-- d1 <- data.frame(x=rbinom(1, 50, prob=0.5)) -->
+<!-- d2 <- data.frame(x=rbinom(1, 100, prob=0.5)) -->
+<!-- d3 <- data.frame(x=rbinom(1, 100, prob=0.09)) -->
+<!-- d4 <- data.frame(x=rbinom(1, 50, prob=0.5)) -->
+
+<!-- p1 <- (ggplot(data=d1, aes(x=x)) -->
+<!--        + geom_histogram(binwidth = 1/10000, color="black", fill="lightblue") -->
+<!--        # + geom_density(alpha=0.2, color="red", size=1.3, adjust=1.8) -->
+<!--        # + theme_bw() -->
+<!--        # + theme(axis.text.y=element_blank()) -->
+<!--        # + ylab("") -->
+<!--        # + stat_function(fun = dnorm, -->
+<!--                        # args = list(mean = 10*0.5,  -->
+<!--                                    # sd = 10*0.5*(1-0.5)), -->
+<!--                        # # color="blue", linetype="dashed", -->
+<!--                        # size=1.1) -->
+<!--        ) -->
+<!-- p1 -->
+<!-- ``` -->
+
+## <font size="6"> FINDING CUTOFF POINTS </font>
+
+Body temperatures of healthy humans are distributed nearly normally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the lowest 3% of human body temperatures?**
+
+- Use R: qnorm() function (what does this return?)
+
+```{r qnorm}
+qnorm(0.03)
+```
+
+- Use Z table (work backwards)
+
+## <font size="6"> FINDING CUTOFF POINTS </font>
+
+Body temperatures of healthy humans are distributed nearly normally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the lowest 3% of human body temperatures on the original scale?**
+
+- Use R: qnorm() function (what does this return?)
+
+```{r qnorm2}
+co <- qnorm(0.03)
+co
+```
+
+## <font size="6"> FINDING CUTOFF POINTS </font>
+
+Body temperatures of healthy humans are distributed nearly normally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the lowest 3% of human body temperatures on the original scale?**
+
+- Use R: qnorm() function (what does this return?)
+
+```{r qnorm3}
+co <- qnorm(0.03)
+co
+```
+
+<font size="5">
+$Z=\frac{x-\mu}{\sigma}=\frac{x-98.2}{0.73}=-1.88$
+</font>
+
+<font size="5">
+$-1.88\times 0.73+98.2=96.8$
+</font>
+
+## <font size="6"> PRACTICE </font>
+
+Body temperatures of healthy humans are distributed nearly normally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the highest 10% of human body temperatures (on the original scale)?**
+
+## <font size="6"> PRACTICE </font>
+
+Body temperatures of healthy humans are distributed nearly nor- mally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the highest 10% of human body temperatures (on the original scale)?**
+
+```{r qnorm4}
+co <- qnorm(0.90)
+co
+```
+
+## <font size="6"> PRACTICE </font>
+
+Body temperatures of healthy humans are distributed nearly nor- mally with mean 98.2 F and standard deviation 0.73 F. **What is the cutoff for the highest 10% of human body temperatures (on the original scale)?**
+
+```{r qnorm5}
+co <- qnorm(0.90)
+co
+```
+
+<font size="4">
+$Z=\frac{x-\mu}{\sigma}=\frac{x-98.2}{0.73}=1.28$
+</font>
+
+<font size="4">
+$1.28\times 0.73+98.2=99.1$
+</font>
+
+## <font size="6"> 68-95-99.7 RULE </font>
+
+Rule of thumb for the probability of falling within 1, 2, and 3 standard deviations of the mean in the normal distribution.
+
+```{r norm_est, echo=FALSE, fig.cap="", out.width = '85%', fig.align='center'}
+knitr::include_graphics("norm_est.png")
+```
+
+## <font size="6"> USING THE 68-95-99.7 RULE </font>
+
+SAT scores are distributed nearly normally with mean 1500 and standard deviation 300.
+
+## <font size="6"> USING THE 68-95-99.7 RULE </font>
+
+SAT scores are distributed nearly normally with mean 1500 and standard deviation 300.
+
+```{r sat_norm_est, echo=FALSE, fig.cap="", out.width = '70%', fig.align='center'}
+knitr::include_graphics("sat_norm_est.png")
+```
+
+## <font size="6"> PRACTICE </font>
+
+**Which of the following is false?**
+
+<ol type="a">
+<li>Majority of Z scores in a right skewed distribution are negative.</li>
+<li>In skewed distributions the Z score of the mean might be different than 0.</li>
+<li>For a normal distribution, IQR is less than 2 x SD.</li>
+<li>Z scores are helpful for determining how unusual a data point is compared to the rest of the data in the distribution.</li>
+</ol>
+
+## <font size="6"> PRACTICE </font>
+
+**Which of the following is false?**
+
+<ol type="a">
+<li>Majority of Z scores in a right skewed distribution are negative.</li>
+<li> <span style="color:red"> In skewed distributions the Z score of the mean might be different than 0. </span> </li>
+<li>For a normal distribution, IQR is less than 2 x SD.</li>
+<li>Z scores are helpful for determining how unusual a data point is compared to the rest of the data in the distribution.</li>
+</ol>
+
+# Binomial Distribution
+
+## <font size="6"> MOTIVATING EXAMPLE </font>
+
+<font size="5">
+<span style="color:blue">When a certain telemarketer makes a call, they have a 10\% chance of making a sale (Y) and a 90\% of not making a sale (N).</span>
+</font>
+
+<font size="5">
+**If the telemarketer makes three calls, what is the probability of making exactly one sale?**
+</font>
+
+<span style="color:blue">Scenario 1:</span> 
+
+<font size="4">
+$$P(YNN)=P(Y)P(N)P(N)=0.1\times 0.9\times 0.9=0.081$$
+</font>
+
+<span style="color:blue">Scenario 2:</span>
+
+<font size="4">
+$$P(NYN)=P(N)P(Y)P(N)=0.9\times 0.1\times 0.9=0.081$$
+</font>
+
+<span style="color:blue">Scenario 3:</span>
+
+<font size="4">
+$$P(NNY)=P(N)P(N)P(Y)=0.9\times 0.9\times 0.1=0.081$$
+</font>
+
+<span style="color:red">
+Prob exactly one sale: 0.081+0.081+0.081=3x0.081=0.243
+</span>
+
+## <font size="6"> MOTIVATING EXAMPLE </font>
+
+The question on the previous slide asked for the probability of a given number of "successes", <span style="color:blue">$k$</span>, in a given number of independent trials, <span style="color:blue">$n$</span> ($k=1$ success in $n=3$ trials). 
+
+We calculated this probability as:
+$$\# \ scenarios \times P(single \ scenario)$$
+
+Fortunately, there is a less tedious way to count the "number of scenarios".
+
+## <font size="6"> CHOOSE FUNCTION </font>
+
+Writing out the number of scenarios is possible for small examples, like the telemarketer problem. For larger $n$ and/or $k$ different than 1, (e.g. $n=9$, $k=2$), this gets much more tedious and error prone (feel free to try by modifying the previous example). 
+
+The <span style="color:blue"> choose function </span> is used to calculate the number of ways to choose <span style="color:blue">$k$</span> successes in <span style="color:blue">$n$</span> trials:
+
+$$\left(\begin{matrix}n \\ k \end{matrix}\right)=\frac{n!}{k!(n-k)!}$$
+Factorial:
+
+- <font size="4">$n!=n\times(n-1)\times\cdots\times 2 \times 1$</font>
+- <font size="4">$k!=k\times(k-1)\times\cdots\times 2\times 1$</font>
+
+## <font size="6"> PRACTICE </font>
+
+Which of the following is false?
+
+<ol type="a">
+<li>There are <font size="5">$n$</font> ways of getting 1 success in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ 1 \end{matrix}\right)=1$.</font></li>
+<li> There is only 1 way of getting <font size="5">$n$</font> successes in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ n \end{matrix}\right)=n$</font>.</li>
+<li> There is only 1 way of getting <font size="5">$n$</font> failures in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ 0 \end{matrix}\right)=n$</font></li>
+<li> There are <font size="5">$n-1$</font> ways of getting <font size="5">$n-1$</font> successes in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ n-1 \end{matrix}\right)=n-1$</font></li>
+</ol>
+
+## <font size="6"> PRACTICE </font>
+
+Which of the following is false?
+
+<ol type="a">
+<li>There are <font size="5">$n$</font> ways of getting 1 success in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ 1 \end{matrix}\right)=1$.</font></li>
+<li> There is only 1 way of getting <font size="5">$n$</font> successes in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ n \end{matrix}\right)=n$</font>.</li>
+<li> There is only 1 way of getting <font size="5">$n$</font> failures in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ 0 \end{matrix}\right)=n$</font></li>
+<li> <span style="color:red">There are <font size="5">$n-1$</font> ways of getting <font size="5">$n-1$</font> successes in <font size="5">$n$</font> trials, <font size="4">$\left(\begin{matrix}n \\ n-1 \end{matrix}\right)=n-1$</font></span></li>
+</ol>
+
+## <font size="6"> BINOMIAL DISTRIBUTION</font>
+
+<span style="color:blue"> Binomial distribution:</span> used to describe the number of successes $k$ in a fixed number of independent trials $n$ 
+</span>
+
+<font size="5">
+$$P(X=k)=\underbrace{\left(\begin{matrix}n \\ k \end{matrix}\right)}_{\# \ scenarios}\underbrace{p^k(1-p)^{n-k}}_{P(single \ scenario)}=\frac{n!}{k!(n-k)!}p^k(1-p)^{n-k}$$
+</font>
+
+- $p:$ probability of "success"
+- $\mu=E(X)=np$
+- $\sigma^2=Var(X)=np(1-p)$
+- $\sigma=\sqrt{np(1-p)}$
+
+## <font size="6"> BINOMIAL CONDITIONS </font>
+
+(1) The trials are independent.
+(2) The number of trials, $n$, is fixed.
+(3) Each trial outcome can be classified as a *success* of *failure*.
+(4) The probability of a success, $p$, is the same for each trial.
+
+## <font size="6"> PRACTICE </font>
+
+
+## <font size="6"> PRACTICE </font>
+
+## <font size="6"> EXPECTED VALUE </font>
+
+## <font size="6"> VARIANCE </font>
+
+## <font size="6"> DISTRIBUTIONS OF NUMBER OF SUCCESSES</font>
+
+```{r hist num succ, echo=FALSE}
+s1 <- rbinom(n=2, size=10, prob=0.2)
+s2 <- rbinom(n=1, size=)
+```
+
+
+## <font size="6"> REFERENCES </font>
+
+- Diez et al. (2019) OpenIntro Statistics, Fourth Edition
