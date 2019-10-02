@@ -4,7 +4,7 @@ subtitle: "OpenIntro Lab"
 output: html_document
 ---
 
-*This includes lab materials available in the Probability and Distribution labs available through OpenIntro, which was adapted for OpenIntro by Andrew Bray and Mine Cetinkaya-Rundel from a lab written by Mark Hansen of UCLA Statistics. These materials are available at* <a href="http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/probability/probability.html">OpenIntro: Probability</a> and <a href="http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/normal_distribution/normal_distribution.html">OpenIntro: Normal Distribution</a>. 
+*This includes lab materials available in the Probability lab available through OpenIntro, which was adapted for OpenIntro by Andrew Bray and Mine Cetinkaya-Rundel from a lab written by Mark Hansen of UCLA Statistics. These materials are available at* <a href="http://htmlpreview.github.io/?https://github.com/andrewpbray/oiLabs-base-R/blob/master/probability/probability.html">OpenIntro: Probability</a>. 
 
 ## Probability
 
@@ -44,17 +44,7 @@ Within the nine shot attempts, there are six streaks, which are separated by a "
 
 DELETE THIS LINE AND ANSWER THIS QUESTION USING TEXT. NO R REQUIRED.
 
-It is not always the case that functions are built into R or loaded through packages. It is possible to write functions that complete a specific task that you care about. Here, the custom function calc_streak, which was loaded in with the data, may be used to calculate the lengths of all shooting streaks and then look at this distribution. While there is no help file associated with this function, we can look at it by typing
-
-```{r calc_streak look}
-calc_streak
-```
-
-This function takes an argument, x, that is a vector, like kobe$basket. Go through each line of the function and describe what it does. Use help files for the functions used in each line to help understand what is happening.
-
-**Answer:**
-
-DELETE THIS LINE AND ANSWER THIS QUESTION USING TEXT. NO R REQUIRED.
+It is not always the case that functions are built into R or loaded through packages. It is possible to write functions that complete a specific task that you care about. Here, the custom function calc_streak, which was loaded in with the data, may be used to calculate the lengths of all shooting streaks and then look at this distribution. 
 
 Use the calc_streak function to calculate the lengths of all shooting streaks (apply calc_streak to kobe$basket and call this new object kobe_streak). Then make a barplot of to look at the distribution. You can refer to the solutions for R Lab Ch. 2 on Moodle for an example of the barplot.
 
@@ -191,32 +181,4 @@ DELETE THIS LINE AND ANSWER THIS QUESTION USING TEXT. NO R REQUIRED.
 
 **Answer:**
 
-## Normal Distribution
-
-In this portion of the lab we’ll investigate the probability distribution that is most central to statistics: the normal distribution. If we are confident that our data are nearly normal, that opens the door to many powerful statistical methods. Here we'll use the graphical tools of R to assess the normality of our data and also learn how to generate random numbers from a normal distribution.
-
-### The data
-
-This week we'll be working with measurements of body dimensions. This data set contains measurements from 247 males and 260 females, most of whom were considered healthy young adults.
-
-```{r download body dimensions data}
-download.file("http://www.openintro.org/stat/data/bdims.RData", destfile = "bdims.RData")
-load("bdims.RData")
-```
-
-You'll see that for every observation we have 25 measurements, many of which are either diameters or girths. A key to the variable names can be found at http://www.openintro.org/stat/data/bdims.php, but we’ll be focusing on just three columns to get started: weight in kg (wgt), height in cm (hgt), and sex (1 indicates male, 0 indicates female).
-
-Since males and females tend to have different body dimensions, it will be useful to create two additional data sets: one with only males and another with only females.
-
-```{r split into two data sets}
-mdims <- subset(bdims, sex == 1)
-fdims <- subset(bdims, sex == 0)
-```
-
-
-**Exercise 1.** Make a histogram of males' heights and a histogram of females' heights (use R). How would you compare the various aspects of the two distributions (describe them and compare using text outside of the R code chunk)? 
-
-DELETE THIS TEXT AND INSERT R CHUNK HERE. LABEL AND COMMENT APPROPRIATELY.
-
 DELETE THIS LINE AND ANSWER THIS QUESTION USING TEXT. NO R REQUIRED.
-
