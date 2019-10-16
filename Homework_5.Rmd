@@ -1,0 +1,204 @@
+---
+title: 'STAT 140: Homework 5'
+author: "YOUR NAME HERE"
+date: "10/23/2019"
+output: html_document
+---
+
+## BOOK EXERCISES (OpenIntro Statistics, Fourth Edition)
+
+4.1) **Area under the curve, Part I.** What percent of a standard normal distribution $N(\mu=0,\sigma=1)$ is found in each region? For each part, draw a picture, use appropriate probability notation, and show all your work.
+
+a) Z < -1.35
+
+**Draw a picture.**
+
+**Answer.**
+
+b) Z > 1.48
+
+**Draw a picture.**
+
+**Answer.**
+
+c) -0.4 < Z < 1.5
+
+**Draw a picture.**
+
+**Answer.**
+
+d) |Z| > 2 (|Z| means the absolute value of Z. We can rewrite this question as Z > 2 or Z < -2.)
+
+**Draw a picture.**
+
+**Answer.**
+
+4.2) **Area under the curve, Part II.** What percent of a standard normal distribution is found in each region? For each part, draw a picture, use appropriate probability notation, and show all your work.
+
+a) Z < -1.13
+
+**Draw a picture.**
+
+**Answer.**
+
+b) Z < 0.18
+
+**Draw a picture.**
+
+**Answer.**
+
+c) Z > 8
+
+**Draw a picture.**
+
+**Answer.**
+
+d) |Z| < 0.5
+
+**Draw a picture.**
+
+**Answer.**
+
+4.7) **LA weather, Part I.** The average daily high temperature in June in LA is 77 degrees Fahrenheit with a standard deviation of 5 degrees. Suppose that the temperatures in June closely follow a normal distribution.
+
+a) What is the probability of observing an 83 degree Fahrenheit temperature or higher in LA during a randomly chosen day in June? Draw a picture, use appropriate probability notation, and show all your work.
+
+**Draw a picture:**
+
+**Answer:**
+
+b) How cool are the coldest 10% of the days (days with the lowest average high temperature) during June in LA? Draw a picture, use appropriate probability notation, and show all your work.
+
+**Draw a picture:**
+
+**Answer:**
+
+4.10) **Find the SD.** Cholesterol levels for women aged 20 to 34 follow an approximately normal distribution with mean 185 milligrams per decileter (mg/dl). Women with cholesterol levels above 220 mg/dl are considered to have high cholesterol and about 18.5% of women fall into this category. What is the standard deviation of the distribution of cholesterol levels for women aged 20 to 34? Draw a picture to help summarize what you know, use appropriate notation, and show all your work.
+
+**Draw a picture:**
+
+**Answer:**
+
+
+4.15) **Bernoulli, the mean.** Use the probability rules from Section 3.4 to derive the mean of a Bernoulli random variable, i.e. a random variable X that takes value 1 with probability p and value 0 with probability 1-p. That is, compute the expected value of a generic Bernoulli random variable.
+
+**Answer:**
+
+4.16) **Bernoulli, the standard deviation.** Use the probability rules from Section 3.4 to derive the standard deviation of a Bernoulli random variable, i.e. a random variable X that takes value 1 with probability p and value 0 with probability 1-p. That is, compute the square root of the variance of a generic Bernoulli random variable.
+
+**Answer:**
+
+4.17) **Underage drinking, Part I.** Data collected by the Substance Abuse and Mental Health Services Administration (SAMSHA) suggests that 69.7% of 18-20 years olds consumed alcoholic beverages in any given year. For the following, when necessary, use appropriate probability notation and show all your work. **Please do these calculations using the binomial formula.** If you wish, you can check your answers using R.
+
+a) Suppose a random sample of ten 18-20 year olds is taken. Is the use of the binomial distribution appropriate for calculating the probability that exactly six consumed alcoholic beverages? Explain. (*Hint: check ALL the Binomial assumptions!*)
+
+**Answer:**
+
+b) Calculate the probability that exactly 6 out of 10 randomly sampled 18-20 year olds consumed an alcoholic drink.
+
+**Answer:**
+
+c) What is the probability that exactly four out of ten 18-20 year olds have *not* consumed an alcoholic beverage?
+
+**Answer:**
+
+d) What is the probability that at most 2 out of 5 randomly sampled 18-20 year olds have consumed alcoholic beverages?
+
+**Answer:**
+
+e) What is the probability that at least 1 out of 5 randomly sampled 18-20 year olds have consumed alcoholic beverages?
+
+**Answer:**
+
+4.35) **Roulette winnings.** In the game of roulette, a wheel is spun and you place bets on where it will stop. One popular bet is that it will stop on a red slot; such a bet has an 18/38 chance of winning. If it stops on red, you double the money you bet. If not, you lose the money you bet. Suppose you play 3 times, each time with a $1 bet. 
+
+a) Let the random variable X represent the number of wins. Does X follow a binomial distribution (check conditions)? What are the parameters?
+
+**Answer:**
+
+b) There are four possible outcomes we can observe. Denote each of the four outcomes using probability notation and find the probability of each.
+
+**Answer:**
+
+**Answer:**
+
+**Answer:**
+
+**Answer:**
+
+c) Let the random variable Y represent the total amount won or lost. Write a probability model for Y (use a probability distribution table like in Chapter 3).
+
+**Answer:**
+
+## R EXERCISES
+
+**Exercise 1.**
+
+Pizza delivery times are approximately normally distributed, with mean 30 minutes and standard deviation 5 minutes. In the R chunk below, 500 pizza delivery times are simulated from a normal distribution with that mean and variance. You will use this simulated data set, pizza_wait_sim, throughout this exercise. This exercise involves as review of the pnorm() and qnorm() functions we saw in lecture.
+
+```{r pizza delivery waiting times}
+## Simulated waiting times for pizza delivery
+pizza_wait_sim <- rnorm(n=500, mean=30, sd=5)
+```
+
+What is the probability that delivery takes less than 20 minutes?
+
+**Answer:**
+
+What is the probability that delivery takes more than 40 minutes? 
+
+**Answer:**
+
+What do you notice about the previous two answers? Why is this happening? (No R required.)
+
+**Answer:**
+
+The fastest 15% of deliveries occur in under how many minutes?
+
+**Answer:**
+
+Half of the deliveries take more than how many minutes?
+
+**Answer:**
+
+Did you need R to answer the previous question? Why or why not?
+
+**Exercise 2.** 
+
+Suppose you are really hungry and only keep track of whether pizza is delivered in less than 20 minutes (or not). We can take the pizza_wait_sim data from above and turn it into a vector that only contains this information and store is as pizza_wait_sim_bin. This exercise involves a review of the pbinom(), dbinom(), and rbinom() functions we saw in class.
+
+```{r pizza delivery waiting times binary}
+pizza_wait_sim_bin <- pizza_wait_sim < 20
+```
+
+What is the form of this vector (i.e. what is in it)?
+
+**Answer:**
+
+What happens if you apply the sum function to pizza_wait_sim_bin? What does this return and why?
+
+**Answer:**
+
+The probability of a pizza delivery in less than 20 minutes is 0.0228. 
+
+Suppose we randomly sample 10 deliveries. What is the probability of observing no pizza delivery times of less than 20 minutes?
+
+**Answer:**
+
+Suppose we randomly sample 100 deliveries. What is the probabiliy of observing more than 5 pizza delivery times of less than 20 minutes?
+
+**Answer:**
+
+Suppose we randomly sample 100 deliveries. What is the probabiliy of observing exactly 5 pizza delivery times of less than 20 minutes?
+
+**Answer:**
+
+Using the rbinom() and hist() functions, generate and make histograms of 1000 realizations of (i) 10 deliveries, (ii) 100 deliveries, and (iii) 500 deliveries. 
+
+**Answer:**
+
+For (i)-(iii), do any of your histograms look normal? The *success failure condition* states that generally when np > 10 and np(1-p) > 10, it is okay to use the normal approximation to the binomial. Are these conditions met for (i)-(iii)? If so, are they met when your histograms look normal?
+
+**Answer:**
+
+ 
