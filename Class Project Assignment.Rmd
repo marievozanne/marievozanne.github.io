@@ -1,0 +1,35 @@
+---
+title: "STAT 140: Class Project Assignment 2"
+author: "YOUR NAME HERE"
+date: "10/30/2019"
+output: html_document
+---
+
+1. Restate the research question or questions that you plan to investigate with your data. If you want to change/tweak what you previously submitted, you can do that here.
+
+
+**Question(s):**
+
+2. Insert an R chunk and read your data and load ggplot2 into R in this document. Use head() to display the first few entries to the data. Note that if your data frame has many columns, head() may not print nicely. If you are not planning to look at all of the variables, then you can restrict the data frame to only include the columns that you want to investigate (e.g. data2 <- data[,names(data) %in% c("column_1_name", "column_3_name", "column_4_name", "column_9_name")]). DO THIS IN R - DO NOT DELETE COLUMNS FROM YOUR CSV FILE.
+
+**R Code:**
+
+3. What is your response variable(s)? What are your explanatory variables?
+
+**Response variable(s):**
+
+**Explanatory variable(s):**
+
+4. We studied a variety of plots in Chapter 2. Make at least one (appropriate) plot for each variable you are planning on incorporating in your analysis. At least some of these plots should look at relationships between response and explanatory variables. Be sure to add titles, axis labels, and generally make them clear and presentable. Eventually some of these plots may be incorporated into your final paper, so you can cut down on your work later if you make nice plots now.
+
+**Plots:**
+
+4. We studied contingency tables in Chapter 2. Make tables to look at relationships between categorical variables that are of interest to you. This is particularly useful for categorical variables that you expect to be related to each other.
+
+**Tables:**
+
+5. Do you have a continuous response variable? If so, incorporate what you did in the R lab for Chapter 4 to assess whether this variable (or variables) can be considered approximately normal. This will be important for hypothesis testing, confidence intervals, and linear regression, all of which we will cover in the coming weeks. 
+
+**Normality Assessment:**
+
+
