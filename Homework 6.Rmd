@@ -1,0 +1,116 @@
+---
+title: 'STAT 140: Homework 6'
+subtitle: 'Sampling Distributions and Central Limit Theorem'
+author: "YOUR NAME HERE"
+date: "10/30/2019"
+output: html_document
+---
+
+## BOOK EXERCISES (OpenIntro Statistics, Fourth Edition)
+
+5.1 (a)-(e)
+
+5.2 (a)-(e)
+
+5.3 (a)-(g)
+
+5.4 (a)-(g)
+
+5.5 (a)-(e)
+
+5.6 (a)-(e)
+
+## "Challenge Problem"
+
+**Water contaminants.** A biologist is doing a survey of tap water in a certain area. In area A it is believed that the amount of a certain contaminant in one ounce of tap water follows a normal distribution with mean 1 microgram and standard deviation 0.3 micrograms. In area B, the amount of contaminant per ounce of tap water also follows a normal distribution with mean 1.3 micrograms and standard deviation 0.4 micrograms.
+
+The biologist takes a random sample of fifty one-ounce vials of tap water from Area A, and does the same thing for area B. They put the samples from area A in one box and the samples from area B in another box, and load them into the car. Unfortunately, however, they forget to label the boxes... (cue scary Halloween music here) 
+
+Back in the lab, the biologist picks up one of the boxes at random and decides to find the mean amount of contaminant in the 50 vials and use what they know about the contaminant distribution in Area A and in Area B to determine the probability that the box contains vials from Area B. **The researcher wants to know: given that the mean is found to be between 1.19 and 1.21 micrograms, what is the probability that the selected box is from Area B?** Let B stand for the event that Box B is selected. This will require Bayes' rule!
+
+1. To start the problem, find the following probabilities:
+
+a) $P(1.19\leq \bar{X}\leq 1.21|B)$
+
+b) $P(1.19\leq \bar{X}\leq 1.21|A)$
+
+c) $P(B)$
+
+d) $P(A)$
+
+2. Use Bayes' Rule and the probabilities calculated in (a)-(d) to find $P(B|1.19\leq \bar{X}\leq 1.21)$. 
+
+3. What box was likely picked up? Why?
+
+This problem was adapted from http://spots.gru.edu/nsmith12/R2210/Exercises_centrallimittheorem.pdf.
+
+<!-- ## PROBABILITY IN THE NEWS -->
+
+## R EXERCISE
+
+The Poisson distribution is another named distribution that is important in Statistics. While it is named for Frech mathematician Simeon Poisson, some people refer to it as the fish distribution because poisson is French for fish.
+
+Like the Binomial distribution, it is a discrete probability distribution that is often useful for estimating the number of events in a large population over a fixed period of time. For example, we might use it to model the number of asthma attacks among children in an area in a 6 month period. It has one parameter, $\lambda$, which is the rate, or how many events we expect to occur. For a Poisson random variable $X$, the mean, $E(X)=\lambda$ and $Var(X)=\lambda$.  
+
+Let $X$ be the number of asthma attacks. Suppose the average number of asthma attacks is $E(X)=1/3$. We can use rpois() to randomly generate realizations from X. Suppose we have data about number of asthma attacks in 500 children. If this follows a Poisson(1/3) distribution, then we can simulate and plot the data as follows:
+
+```{r randomly generate poisson realizations and plot}
+lions <- rpois(n=500, lambda=1/3)
+
+hist(lions, xlab="Number of Asthma Attacks", main="Parent Distribution: Number of Asthma Attacks")
+```
+
+Based on our studies of the Central Limit Theorem, we know that for sufficiently large sample sizes, the sampling distribution of the average number of lions seen will be approximately normal with mean $\lambda$ and standard deviation $\sqrt{\frac{\lambda}{n}}$.
+
+In the following code chunk, we will get the sample averages associated with 1000 samples, each with sample size 10.
+```{r sampling distribution n10}
+## N is the number of samples
+N=1000
+
+## n is the sample size
+n=10
+
+## Create a data frame to store my sample means
+sm_asthma_10 <- data.frame(sample_average=rep(NA, N))
+
+## Use for loop to calculate 1000 sample means
+for (i in 1:N){
+  sm_asthma_10$sample_average[i] <- mean(rpois(n, lambda=1/3))
+}
+```
+
+Make a histogram of sm_asthma_10$sample_average - this will be a histogram of the sampling distribution.
+
+DELETE TEXT AND INSERT R CHUNK HERE
+
+What is the mean of the distribution? What is the standard error?
+
+DELETE TEXT AND INSERT R CHUNK HERE
+
+Does the sampling distribution appear to be approximately normal? Why or why not?
+
+**Answer:**
+
+How do the mean and standard error compare to mean $\lambda$ and standard deviation $\sqrt{\frac{\lambda}{n}}$?
+
+**Answer:**
+
+Now get sample averages associated with 1000 samples, each with sample size 50.
+
+DELETE TEXT AND INSERT R CHUNK HERE
+
+Make a histogram of your sample averages as before.
+
+DELETE TEXT AND INSERT R CHUNK HERE
+
+What is the mean of the distribution? What is the standard error?
+
+DELETE TEXT AND INSERT R CHUNK HERE
+
+Does the sampling distribution appear to be approximately normal? Why or why not?
+
+**Answer:**
+
+How do the mean and standard error compare to mean $\lambda$ and standard deviation $\sqrt{\frac{\lambda}{n}}$?
+
+**Answer:**
