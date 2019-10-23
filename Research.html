@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+</style>
+<title>Marie V. Ozanne</title>
+<meta name="description" content="">
+<meta names="keywords" content="">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="index.html">Home</a>
+  <div class="dropdown">
+  <button class="dropbtn" onclick="myFunction()">Teaching
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-content" id="myDropdown">
+    <a href="STAT_140_Homepage.html">FALL 2019</a>
+    <!--<a href="#">Link 2</a>-->
+    <!--<a href="#">Link 3</a>-->
+  </div>
+  </div> 
+  <a href="#research">Research</a>
+  <a href="#news">News</a>
+</div>
+
+<h2>Marie V. Ozanne</h2>
+<h3><i>Clare Boothe Luce Assistant Professor of Statistics</i></h3>
+
+<p>Infectious diseases, which are caused by organisms such as bacteria, viruses, fungi, or parasites,
+have plagued populations since time immemorial. Infectious disease modeling describes a subdiscipline
+of mathematics and statistics where models are developed to study the mechanisms of disease spread. These
+models can help predict disease behavior in a population (e.g. will the disease become an epidemic
+or will it die out), and evaluate control strategies. Such models can be either deterministic or 
+stochastic in nature. Compartmental models comprise one class of models used to understand infectious 
+diseases. These models simplify an infection process by grouping infection states of a pathogen into 
+"compartments" and assume that individuals (1) in the same compartment behave the same and (2) move
+through the compartments in a particular order. One example of an epidemic compartmental model is the 
+Susceptible, Infectious, Removed (SIR) model. I specialize in Bayesian epidemic compartmental models for 
+<a href="https://www.who.int/neglected_diseases/diseases/en/">neglected tropical diseases</a>, as defined
+by the World Health Organization.</p>
+
+<!--<p>
+I specialize in Bayesian epidemic compartmental models for 
+<a href="https://www.who.int/neglected_diseases/diseases/en/">neglected tropical diseases</a>, as defined
+by the World Health Organization.
+</p>-->
+
+<p>My dissertation work was featured in the University of Iowa 
+<a href="https://dare.research.uiowa.edu/ozanne-marie/">Dare to Discover</a> campaign.
+</p>
+
+<h3>Selected Publications</h3>
+
+<h3>2019</h3>
+<ul>
+    <li>G.D. Brown and <b>M.V. Ozanne</b> (2019). Statistical models for infectious diseases: 
+        a useful tool for practical decision-making. <i>American Journal of Tropical Medicine
+            & Hygiene</i>, 101, 1-2. (Editorial)</li>
+    <li><b>M.V. Ozanne</b>, G.D. Brown, J.J. Oleson, et al. (2019). Bayesian compartmental model for an
+        infectious disease with dynamic states of infection. <i>Journal of Applied Statistics</i>,
+        46(6), 1043-1065.
+    </li>
+</ul>
+
+<!--<h3>2017</h3>
+
+<h3>2015</h3>
+
+<h3>2012</h3>-->
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+</body>
+</html>
