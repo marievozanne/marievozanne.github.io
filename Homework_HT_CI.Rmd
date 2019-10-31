@@ -1,0 +1,81 @@
+---
+title: 'STAT 140: Homework 8'
+author: "YOUR NAME HERE"
+date: "11/6/2019"
+output: html_document
+subtitle: Hypothesis Tests and Confidence Intervals
+---
+
+## BOOK EXERCISES (OpenIntro Statistics, Fourth Edition)
+
+5.17)
+
+5.18)
+
+5.19) (a)-(b)
+
+5.22)
+
+5.29)
+
+5.32)
+
+5.33)
+
+## "Challenge Problem"
+
+**Difference of Two Proportions - Offshore Drilling** A survey asked 827 randomly sampled registered voters in California ``Do you support? Or do you oppose? Drilling for oil and natural gas off the Coast of California? Or do you not know enough to say? The distribution of responses, separated based on whether or not the respondent graduated from college, is on page 227 of your textbook.
+
+(a) Estimate the percent of college graduates in this sample support drilling for oil and natural gas off the Coast of California?
+
+(b) Estimate the percent of non-college graduates in this sample support drilling for oil and natural gas off the Coast of California?
+
+(c) Conduct a hypothesis test to determine if the data provide strong evidence that the proportion of college graduates who support off-shore drilling in California is different than that of non-college graduates?
+
+## R EXERCISE
+
+In this exercise, we will explore confidence intervals for a proportion in the context of a simulation. The function below, CI_fcn, creates N confidence intervals for a proportion. 
+
+```{r CI_fcn}
+## Create function to create N confidence intervals
+## p is the population proportion (known because this is a simulation)
+## n is the sample size
+## z_star is our critical value (e.g. 1.96 for a 95% confidence interval)
+## N is the number of confidence intervals you want to make
+CI_fcn <- function(p, n, z_star, N){
+  CI_df <- data.frame(Sample=1:N,
+                      p_hat=rep(NA, N),
+                      lower.bound=rep(NA, N),
+                      upper.bound=rep(NA, N))
+  CI_df$p_hat <- rbinom(n=N, size=n, prob=p)/n
+  SE <- sqrt(CI_df$p_hat*(1-CI_df$p_hat)/n)
+  CI_df$lower.bound <- CI_df$p_hat-z_star*SE
+  CI_df$upper.bound <- CI_df$p_hat+z_star*SE
+  return(CI_df)
+}
+```
+
+Using the CI_fcn, make 100 95% confidence intervals. Assume that the true proportion of successes is 0.2 and that the sample size is 70. Name the object that you create CI_95.
+
+DELETE THIS TEXT AND INSERT R CHUNK HERE
+
+Determine the proportion of your confidence intervals that contain the true proportion of successes.
+
+DELETE THIS TEXT AND INSERT R CHUNK HERE
+
+How does this proportion compare to the confidence level for your interval (i.e. 95%)?
+
+ANSWER DOES NOT REQUIRE R CODE
+
+We can also plot the sample proportions and their corresponding confidence intervals. We will use ggplot for this with the data frame you generated using CI_fcn. Some example code is included but it currently commmented out. Edit it as needed to display your results from running CI_fcn.
+
+```{r visualize confidence intervals}
+library(ggplot2)
+
+# ggplot(CI_95, aes(x=Sample, y=p_hat)) + 
+#     geom_point() +
+#     geom_errorbar(aes(ymin=lower.bound, ymax=upper.bound), width=.1) +
+#     geom_hline(yintercept=TRUE PROPORTION, color="red")
+
+```
+
