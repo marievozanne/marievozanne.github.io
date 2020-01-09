@@ -1,0 +1,155 @@
+<!--STAT 140 Homepage-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+</style>
+<title>STAT 140</title>
+<meta name="description" content="">
+<meta names="keywords" content="">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="index.html">Home</a>
+  <a href="STAT_140_Homepage_S20.html">STAT 140</a>
+  <div class="dropdown">
+  <!--<button class="dropbtn" onclick="myFunction()">Syllabus
+    <i class="fa fa-caret-down"></i>
+  </button>
+  <div class="dropdown-content" id="myDropdown">
+    <a href="#">STAT 140-02</a>
+  </div>-->
+  </div> 
+  <a href="STAT_140_Schedule.html">Schedule</a>
+  <a href="STAT_140_Labs.html">Labs</a>
+  <a href="STAT_140_Homework.html">Homework</a>
+  <a href="Resources_R_Studio_R_Markdown.html">Resources</a>
+  <a href="#">Quizzes/Exams</a>
+  <a href="STAT_140_Project.html">Project</a>
+</div>
+
+<h2>STAT 140: Introduction to the Ideas and Applications of Statistics</h2>
+
+<p>Welcome to the Spring 2020 STAT 140 homepage! Please check back regularly for course announcements,
+  notes, and assignments.</p>
+</p>
+
+<ul style="list-style-type:none;">
+<li><b>Instructor:</b> Marie Ozanne</li>
+
+<br>
+
+<li><b>Email:</b> <a href="mailto:mozanne@mtholyoke.edu" target="_top">mozanne@mtholyoke.edu</a></li>
+<br>
+<li><b>Meeting Times:</b> MWF 11:00 AM - 12:15 PM </li>
+<br>
+<li><b>Office Hours:</b> I have regularly scheduled office hours at the times listed below. 
+I am guaranteed to be in my office (Clapp 403) during these times, but I am also available by appointment -
+send an email to schedule a meeting!</li>
+<br>
+<ul>
+  <li>TBD</li>
+  <!--<li>Tuesday 9:45-10:45 AM; 2:45-3:45 PM</li>
+  <li>Friday 3:00-4:00 PM</li> -->
+</ul>
+<br>
+<li><b>Extra Help:</b> </li>
+<br>
+<li><b>Syllabus:</b> <a href="STAT140_S20_syllabus.pdf">pdf</a></li>
+</ul>
+
+
+
+<!--<h3><i>Helpful Resources</i></h3>
+<ul>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet</a></li>
+  <li><a href="https://rmarkdown.rstudio.com/authoring_quick_tour.html">R Markdown Quick Tour</a></li>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf">Base R Cheat Sheet</a></li>
+  <li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Data Visualization with ggplot2 Cheat Sheet</a></li>
+  <li><a href="detexify.kirelabs.org/classify.html">Detexify - For Math Typesetting in Markdown</a></li>
+</ul>-->
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+</body>
+</html>
