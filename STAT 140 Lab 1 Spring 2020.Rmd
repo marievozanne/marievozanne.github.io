@@ -11,12 +11,6 @@ subtitle: Introduction to R Markdown, Dataframes, and Data Visualization
 
 Within R Studio, we can write code in a script (this produces a .R file), as we did in Lab 0, or we can use an R Markdown file (produces a .Rmd file). While the former can be very useful, the latter is an excellent way to produce reproducible statistical analyses and generate self-contained reports. You can include text (as you would in Word, for example) and R code that produces data summaries, plots, and statistical analyses in the same document. For this reason, we will be using R Markdown in this class for labs and for many homework assignments. There is a bit of a learning curve involved in learning both R and R Markdown, so be patient, work together, and ask questions!
 
-Notes:
-
-Text formatting in R Markdown: maybe point them to a cheat sheet here so we don't have to go through all of the details
-
-Spellcheck in R Markdown: need to figure out how to implement this
-
 ## Inserting R chunks into R Markdown
 
 Since Markdown allows us to combine text and code, we have to tell Markdown when text should be treated as R code. Everything we have done so far is simple text editting. In order to include code, we have to insert something called an R chunk. We will write all our code within R chunks (you can insert as many as you need).
@@ -29,10 +23,12 @@ Since Markdown allows us to combine text and code, we have to tell Markdown when
 
 ### How to name an R chunk
 
-- where the name goes
-- valid naming conventions
-- need unique names
-- what happens if the name is not unique?
+It is good practice to name your R chunks - it makes error messages more informative. Each chunk must have a unique name. If two chunks have the same name, the knitting process will throw an error. In this example, the name of this R chunk is name1.
+
+```{r name1}
+
+```
+
 
 ### How to add other information to an R chunk
 
