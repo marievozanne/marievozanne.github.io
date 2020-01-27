@@ -186,13 +186,23 @@ library(ggplot2)
 
 We will be using ggplot2 in this class extensively. The functions in this package work by adding layers to a plot. 
 
-start with a basic introduction here -- maybe just scatterplots.
+The following code specifies the data and the variables we want to plot. Try running it - does it produce a plot?
 
-ggplot()
+```{r layer1, tidy=TRUE}
+ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width))
+```
 
-- scatterplots
+In this next chunk, we add another layer to the plot so we produce a scatterplot. We add geom_point() to the code.
 
-<!-- Make portion of homework assignment dedicated to debugging each week -->
+```{r layer2, tidy=TRUE}
+ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width)) + geom_point()
+```
+
+If we wanted a line graph instead, then we can change the argument from geom_point() to geom_line(). Sometimes this kind of a plot makes sense, but in this case it's not particularly informative.
+
+```{r layer2_line, tidy=TRUE}
+ggplot(data=iris, aes(x=Sepal.Length, y=Sepal.Width)) + geom_line()
+```
 
 ## How to knit an R Markdown file
 
