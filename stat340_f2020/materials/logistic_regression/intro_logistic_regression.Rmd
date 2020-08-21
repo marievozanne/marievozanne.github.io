@@ -1,0 +1,136 @@
+---
+title: "Introduction to Logistic Regression"
+subtitle: "GLMs for Binary Response Data"
+output: pdf_document
+---
+
+# Example: Crab species identification
+
+We will work with a data set about Leptograpsus crabs originally presented in
+
+Campbell, N.A. and Mahon, R.J. (1974) A multivariate study of variation in two species of rock crab of genus Leptograpsus. Australian Journal of Zoology 22, 417–425.
+
+They have also been discussed previously in
+
+Venables, W. N. and Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth edition. Springer.
+
+There are two species of this crab; we will examine the effect of certain physical dimenions on crab species.  The data we are working with contains 5 morphological measurements on 200 crabs, 100 each of two species of Leptograpsus crabs collected at Fremantle, W. Australia.
+
+The variables in this data set are as follows:
+
+ * `sp`: species - "B" or "O" for blue or orange.
+ * `sex`: the crab's sex
+ * `FL`: frontal lobe size (mm).
+ * `RW`: rear width (mm).
+ * `CL`: carapace length (mm).
+ * `CW`: carapace width (mm).
+ * `BD`: body depth (mm).
+ 
+For purposes of this example, we will only focus on species and frontal lobe size.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(MASS)
+library(ggplot2)
+library(dplyr)
+library(caret)
+set.seed(478)
+crabs <- MASS::crabs[sample.int(nrow(crabs)), ]
+crabs <- crabs %>% dplyr::select(-index)
+```
+
+#### Binary encoding of response variable
+
+Typically in logistic regression, we use an indicator variable for the response variable:
+
+\begin{align*}
+Y_i &= \begin{cases} 1 & \text{ if crab number $i$ is an orange crab} \\ 0 & \text{ otherwise (if a blue crab)} \end{cases}
+\end{align*}
+
+```{r}
+crabs <- crabs %>%
+  mutate(
+    sp_01 = ifelse(sp == "O", 1, 0)
+  )
+head(crabs)
+dim(crabs)
+```
+
+### Plot of the data
+
+```{r fig.align='center'}
+ggplot(data = crabs, mapping = aes(x = FL, y = sp_01)) +
+  geom_point() + 
+  theme_bw()
+```
+
+### Fit logistic regression model
+
+Note:
+
+ * Behind the scenes, `sp` is converted to 0/1 representation by the glm function
+ * By default, assignment is in alphabetic order, so "B" goes to 0 and "O" goes to 1.
+ 
+```{r}
+logistic1 <- glm(sp_01 ~ FL, data=crabs, family = binomial)
+```
+
+
+### Print model summary
+
+```{r}
+summary(logistic1)
+
+## Effect of FL on species odds
+exp(logistic1$coefficients[2])
+```
+
+### Plot of the data with logistic regression model fit
+
+This curve represents the estimated probability that a crab is orange, as a function of frontal lobe size (mm).
+
+```{r fig.align='center'}
+ggplot(data = crabs, mapping = aes(x = FL, y = sp_01)) +
+  geom_point() +
+  geom_smooth(method="glm", method.args=list(family="binomial"), se=FALSE) +
+  theme_bw()
+```
+
+#### 1. Based on this model, how could you calculate the estimated probability that a crab with a frontal lobe size of 15 mm is orange?
+
+\vspace{2cm}
+
+\emph{Method 1}
+
+```{r}
+b_hat <- matrix(logistic1$coefficients)
+X <- matrix(c(1,15), nrow=1)
+
+exp(X%*%b_hat)/(1+exp(X%*%b_hat))
+```
+
+\emph{Method 2}
+
+```{r}
+predict_data <- data.frame(
+  FL = 15
+)
+predict(logistic1, newdata=predict_data, type="response")
+```
+
+
+#### 2. What is the interpretation of $\hat{\beta}_1$ in terms of odds?
+
+\vspace{3cm}
+
+#### 3. What is the estimated relationship between the odds that a crab with a frontal lobe of 10 mm is orange versus a crab with a frontal lobe of 20 mm is orange?
+
+\vspace{2cm}
+
+```{r}
+X <- cbind(c(1,1),
+           c(10,20))
+exp(X[2,]%*%b_hat)/exp(X[1,]%*%b_hat)
+exp(b_hat[2]*10)
+```
+
+#### 4. Mathematical check - why are these both valid ways to calculate the estimated relationship?

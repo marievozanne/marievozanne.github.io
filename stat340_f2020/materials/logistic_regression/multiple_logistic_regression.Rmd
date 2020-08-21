@@ -1,0 +1,153 @@
+---
+title: 'STAT 340: Multiple Logistic Regression'
+subtitle: GLMs for Binary Response Data
+output:
+  pdf_document: default
+---
+
+## Reading
+
+\emph{J. Fox, 3rd Edition, pages 380-388}
+
+## Logistic Regression with Multiple Explanatory Variables
+
+We will now extend logistic regression to allow for $p$ explanatory variables which may be either quantitative or categorical.
+
+\begin{align*}
+P(Y_i = 1 | X_{i1}, \ldots, X_{ip}) = p(X_{i1}, \ldots, X_{ip}) &= \frac{e^{\beta_0 + \beta_1 X_{i1} + \cdots + \beta_p X_{ip}}}{1 + e^{\beta_0 + \beta_1 X_{i1} + \cdots + \beta_p X_{ip}}}
+\end{align*}
+
+Illustration with $p = 2$ explanatory variables:
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rgl)
+library(ggplot2)
+library(gridExtra)
+library(dplyr)
+library(ISLR)
+library(caret)
+library(carData)
+setupKnitr()
+knitr::knit_hooks$set(webgl = hook_webgl)
+```
+
+<!-- Reading: Fox: Chapter 14.1, pgs. 370-391 -->
+
+```{r, include = FALSE, rgl=TRUE}
+x1_lower <- 0
+x1_upper <- 5
+x2_lower <- 0
+x2_upper <- 5
+X1 <- unexpanded_X_solid <- seq(from = x1_lower, to = x1_upper, length = 101)
+X2 <- unexpanded_Y_solid <- seq(from = x2_lower, to = x2_upper, length = 101)
+plot_df_0 <- as.data.frame(expand.grid(X = unexpanded_X_solid, Y = unexpanded_Y_solid))
+names(plot_df_0) <- c("X1", "X2")
+beta0 <- -7
+beta1 <- 1
+beta2 <- 2
+plot_df_0 <- plot_df_0 %>%
+  mutate(
+    prob_default = exp(beta0 + beta1 * X1 + beta2 * X2) / (1 + exp(beta0 + beta1 * X1 + beta2 * X2))
+  )
+color_n <- 1000 # number of colors used
+prob_default_lim <- range(plot_df_0$prob_default)
+prob_default_range <- prob_default_lim[2] - prob_default_lim[1]
+prob_default_colorlut <- rev(rainbow(1000, start = 0, end = 4/6)) # height color lookup table
+prob_default_col_0 <- prob_default_colorlut[ floor(color_n * (plot_df_0$prob_default - prob_default_lim[1])/prob_default_range) + 1 ]
+junk <- open3d()
+z_max <- prob_default_lim[2]
+plot3d(X1, X2, xlim=c(x1_lower, x1_upper), ylim=c(x2_lower, x2_upper), zlim=c(0, z_max), zlab="f(X1, X2)", xlab = "X1", ylab = "X2", mouseMode = "zAxis", type = "n", aspect = FALSE)
+surface3d(X1, X2, plot_df_0$prob_default, alpha = 0.7, col = prob_default_col_0)
+
+#rglwidget(elementId = "plot_bivarnorm0_integral")]
+par3d(list(
+    userMatrix = structure(c(0.670073330402374, -0.244383126497269, 
+    0.700912654399872, 0, 0.741270184516907, 0.269900679588318, 
+    -0.614550352096558, 0, -0.0389910526573658, 0.931359469890594, 
+    0.362007141113281, 0, 0, 0, 0, 1), .Dim = c(4L, 4L))))
+```
+
+\vspace{2cm}
+
+```{r, echo=FALSE, out.width = '100%', fig.align='center'}
+knitr::include_graphics("mult_log_reg_fig.png")
+```
+
+\newpage
+
+## Example: Volunteering for a Psychological Experiment
+
+In 1987, Cowles and Davis collected data on students in an introductory psychology class to assess their willingness to participate in a psychological experiment. These data are available in the \texttt{Cowles} data set in the \textbf{carData} package. The variables in the data set are as follows: 
+
+- \texttt{neuroticism} = a personality dimension, a numeric variable with integer scores on a scale potentially ranging from zero to 24. 
+- \texttt{extraversion} = a personality dimension, a numeric variable with a potential range of zero to 24.
+- \texttt{sex} = factor variable with two levels, "male" and "female"
+- \texttt{volunteer} = factor variable with levels "yes" and "no"; 597 of the 1421 students volunteered.
+
+The goal is to estimate the probability of volunteering based on the two quantitative and one categorial explanatory variables.
+
+```{r}
+glm_volunteer <- glm(volunteer ~ sex+neuroticism*extraversion,
+                     data=Cowles, family=binomial)
+summary(glm_volunteer)
+```
+
+#### What is the estimated equation for this model? Express it matrix form.
+
+\vspace{3cm}
+
+
+#### Effect Display Plots
+
+```{r}
+library(effects)
+
+plot(predictorEffects(glm_volunteer, ~ neuroticism + extraversion),
+     xlevels=list(neuroticism=seq(0,24,by=8),
+                  extraversion=seq(0,24,by=8)),
+     lines=list(multiline=TRUE))
+```
+
+<!-- ## Mathematical Formulation -->
+
+
+<!-- ### The logistic curve -->
+
+<!-- ```{r include=FALSE} -->
+<!-- newdat <- data.frame(extraversion=rep(seq(min(Cowles$extraversion), -->
+<!--                                           max(Cowles$extraversion), -->
+<!--                                           len=100), -->
+<!--                                       2), -->
+<!--                      neuroticism=rep(seq(min(Cowles$neuroticism), -->
+<!--                                          max(Cowles$neuroticism), -->
+<!--                                          len=100), -->
+<!--                                       2), -->
+<!--                      sex=c(rep("male", 100),rep("female", 100))) -->
+<!-- Cowles$volunteer2 <- 1*(Cowles$volunteer=="yes") -->
+
+<!-- newdat$volunteer2 <- predict(glm_volunteer, newdata=newdat, type="response") -->
+<!-- # plot(volunteer2 ~ extraversion, data=Cowles, col="red") -->
+<!-- # lines(volunteer2 ~ extraversion, newdat, col="green", lwd=2) -->
+
+<!-- ggplot(data=Cowles, aes(x=extraversion, y=volunteer2)) +  -->
+<!--   geom_point() +  -->
+<!--   geom_line(data=newdat, aes(x=extraversion, y=volunteer2)) + -->
+<!--   theme_bw() -->
+<!-- ``` -->
+
+#### Interpret the effect display plots.
+
+\newpage
+
+## References:
+
+M. Cowles and C. Davis. (1987). The subject matter of psychology: Volunteers. \emph{British Journal of Social Psychology}, 26, 97-102.
+
+J. Fox. 2016. \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd Edition. Sage.
+
+J. Fox. (2003). Effect Displays in R for Generalised Linear Models. \emph{Journal of Statistical Software}, 8(15).
+
+J. Fox and S. Weisberg. 2019. \emph{An R Companion to Applied Regression}, 3rd Edition. Sage.
+
+F. Ramsey and D. Schafer. 2013. \emph{The Statistical Sleuth: A Course in Methods of Data Analysis}, 3rd Edition. Cengage.
