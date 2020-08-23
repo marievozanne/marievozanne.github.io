@@ -1,0 +1,77 @@
+---
+title: "Projections Review"
+output: pdf_document
+---
+
+## Orthogonal: 
+
+Vectors $\mathbf{v}$ and $\mathbf{w}$ are \textbf{orthogonal} (perpendicular) if their inner product is 0. We use the following shorthand: $\mathbf{v}\perp \mathbf{w}$.
+
+### Example:
+
+$\mathbf{v}=\left[\begin{matrix}2 \\ 1 \end{matrix}\right]$, $\mathbf{w}=\left[\begin{matrix}1 \\ -2 \end{matrix}\right]$ 
+
+$$
+\mathbf{v}\cdot \mathbf{w} = \mathbf{v}'\mathbf{w}=\left[\begin{matrix}2 & 1 \end{matrix}\right]\left[\begin{matrix}1 \\ -2 \end{matrix}\right]=2\cdot 1 + 1\cdot(-2)=0
+$$
+
+Why? 
+\begin{itemize}
+\item If $\mathbf{v}$ and $\mathbf{w}$ are perpendicular, the triangle is a right triangle.
+\item The Pythagorean theorem says
+\begin{align*}
+& ||\mathbf{v}||^2+||\mathbf{w}||^2=||\mathbf{v}+\mathbf{w}||^2\\
+\Rightarrow & \left(\sqrt{v_1^2+v_2^2+\cdots + v_n^2}\right)^2 + \left(\sqrt{w_1^2+w_2^2+\cdots + w_n^2}\right)^2=\left(\sqrt{(v_1+w_1)^2+(v_2+w_2)^2+\cdots + (v_n+w_n)^2}\right)^2\\
+\Rightarrow & v_1^2+v_2^2+\cdots + v_n^2 + w_1^2+ w_2^2 + \cdots w_n^2 = v_1^2 + 2v_1w_1 + w_1^2 + \cdots + v_n^2 + 2v_nw_n + \cdots w_n^2\\
+\Rightarrow & 0 = 2v_1w_1 + \cdots + 2v_nw_n\\
+\Rightarrow & 0 = 2\mathbf{v}'\mathbf{w}\\
+\Rightarrow \mathbf{v}'\mathbf{w} = 0
+\end{align*}
+\end{itemize}
+
+## Column space: 
+
+The \textbf{column space} of a matrix $\mathbf{X}=\left[\begin{matrix} \mathbf{x}_1 & \mathbf{x}_2 & \cdots & \mathbf{x}_p \end{matrix}\right]$ is the linear span of its columns: $\mathcal{C}(\mathbf{X})=\left\{\mathbf{v}: \mathbf{v}=\sum_{j=1}^p a_j\mathbf{x}_j\right\}$
+
+## Perpendicular projection operator (matrix)
+
+$\mathbf{H}$ is a \textbf{perpendicular projection operator} (matrix) onto $\mathcal{C}(\mathbf{X})$ if and only if
+\begin{itemize}
+\item[(i)] $\mathbf{v} \in \mathcal{C}(\mathbf{X}) \Rightarrow \mathbf{H}\mathbf{v}=\mathbf{v}$ (projection doesn't change things in $\mathcal{C}(\mathbf{X})$)
+\item[(ii)] $\mathbf{w} \perp \mathcal{C}(\mathbf{X}) \Rightarrow \mathbf{H}\mathbf{w}=\mathbf{0}$ (perpendicular - vectors orthogonal to $\mathcal{C}(\mathbf{X})$ go to 0)
+\end{itemize}
+
+### Example:
+
+Suppose $\left[\begin{matrix}2 \\ 1 \end{matrix}\right]$, $\mathcal{C}(\mathbf{X})=\left\{\mathbf{v}:\mathbf{v}=a\left[\begin{matrix}2 \\ 1 \end{matrix}\right] \right\}$ - this means vectors like $\left[\begin{matrix}2 \\ 1 \end{matrix}\right]$, $\left[\begin{matrix}4 \\ 2 \end{matrix}\right]$, $\left[\begin{matrix}-1 \\ -0.5 \end{matrix}\right]$
+
+\vspace{3cm}
+
+Let $\mathbf{H}=\left[\begin{matrix}0.8 & 0.4\\ 0.4 & 0.2 \end{matrix}\right]$, which is the perpendicular projection operator onto $\mathcal{C}(\mathbf{X})$.
+
+Verify: 
+
+(i) For any $a \in \mathbb{R}$, 
+
+$$
+\mathbf{H}\left[\begin{matrix}2a \\ a \end{matrix}\right]=\left[\begin{matrix}0.8\cdot 2a + 0.4a \\ 0.4\cdot 2a + 0.2a \end{matrix}\right]=\left[\begin{matrix}2a \\ a \end{matrix}\right] \ \text{(Property (i) holds.)}
+$$
+
+(ii) For any $a \in \mathbb{R}$,
+
+$$
+\mathbf{H}\left[\begin{matrix}a \\ -2a \end{matrix}\right]=\left[\begin{matrix}0.8\cdot a + 0.4(-2a) \\ 0.4\cdot a + 0.2(-2a) \end{matrix}\right]=\left[\begin{matrix}0 \\ 0 \end{matrix}\right] \ \text{(Property (ii) holds.)}
+$$
+
+### Theorem: The (unique) perpendicualr projection operator onto $\mathcal{C}(\mathbf{X})$ is $\mathbf{X}(\mathbf{X'X})^{-1}\mathbf{X}'$.
+
+\emph{Proof:} Long and not helpful for intuition. The setup is to verify conditions (i) and (ii) in the definition. 
+
+
+### Example: 
+
+If $\mathbf{X}=\left[\begin{matrix}2 \\ 1 \end{matrix}\right]$, then
+
+$$
+\mathbf{X}(\mathbf{X'X})^{-1}\mathbf{X}'=\left[\begin{matrix}2 \\ 1 \end{matrix}\right]\left(\left[\begin{matrix}2 & 1 \end{matrix}\right]\left[\begin{matrix}2 \\ 1 \end{matrix}\right] \right)^{-1}\left[\begin{matrix}2 & 1 \end{matrix}\right]=\cdots = \left[\begin{matrix}0.8 & 0.4 \\ 0.4 & 0.2 \end{matrix}\right].
+$$

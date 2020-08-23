@@ -1,0 +1,97 @@
+---
+title: "R Matrix Commands"
+output: pdf_document
+---
+
+## R commands
+
+- c(): create a vector
+- cbind(): bind vectors together as columns of a matrix
+- t(): transpose of a matrix
+- %*%: matrix multiplication
+- solve(): find the inverse of a matrix
+- matrix(): directly create a matrix from specified values; by default this will make a matrix with 1 column
+
+## Examples
+
+### Create model matrix: $\mathbf{X}$
+
+```{r}
+X <- cbind(
+  c(1,1,1),
+  c(0,1,1)
+)
+X
+```
+
+### Matrix multiplication: $\mathbf{X'X}$
+
+```{r}
+t(X)%*%X
+```
+
+### Matrix inversion: $(\mathbf{X'X})^{-1}$
+
+```{r}
+solve(t(X)%*%X)
+```
+
+### Create $\mathbf{y}$
+
+```{r}
+# suppose y_1=2, y_2=4, y_3=6
+y <- matrix(c(1,2,3))
+```
+
+### Helpful side note (may be useful in the future)
+
+```{r}
+example <- matrix(1:6, nrow=2, ncol=3)
+example
+```
+
+### $\hat{\boldsymbol{\beta}}$ computed using matrices
+
+```{r}
+beta_hat <- solve(t(X)%*%X) %*% t(X) %*% y
+```
+
+### Compute hat matrix (also called the projection matrix)
+
+```{r}
+H <- X %*% solve(t(X)%*%X) %*% t(X)
+H
+```
+
+### Compute $\hat{\mathbf{y}}$
+
+$\hat{\mathbf{y}}=\mathbf{X}\hat{\boldsymbol{\beta}}$
+
+```{r}
+y_hat1 <- X %*% beta_hat
+y_hat1
+```
+
+$\hat{\mathbf{y}}=\mathbf{H}\mathbf{y}$
+
+```{r}
+y_hat2 <- H %*% y
+y_hat2
+```
+
+### Compute residuals
+
+$\hat{\boldsymbol{\epsilon}}=\mathbf{y}-\hat{\mathbf{y}}$
+
+```{r}
+resids <- y-y_hat1
+resids
+```
+
+### Recall, all of this came from minimizing the residual sum of squares (RSS)!
+```{r}
+rss <- sum(resids^2)
+rss
+```
+
+
