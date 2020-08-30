@@ -1,0 +1,57 @@
+---
+title: "Multiple logistic regression"
+subtitle: "STAT 340: Applied Regression"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Interpretation: partial-regression coefficients
+
+Recall from your reading that we can express the odds of "success" for individual $i$ for some generic logistic regression model as follows:
+
+$$
+\frac{\pi_i}{1-\pi_i}=\exp\left\{\beta_0+\beta_1x_{i1}+\cdots + \beta_px_{ip}\right\}=e^{\beta_0}(e^{\beta_1})^{x_{i1}}\cdots (e^{\beta_p})^{x_{ip}}.
+$$
+$e^{\beta_j}$ is the multiplicative effect of the odds of increasing $x_j$ by 1, when we hold all other explanatory variables constant.
+
+### Exercise 1:
+
+Consider the volunteer example from the lecture for today. For purposes of discussion, we will pretend that the assumptions for this are satisfied, despite the fact that we saw in the notes that the linear relationship between the log odd and neuroticism is *not* satisfied.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rgl)
+library(ggplot2)
+library(gridExtra)
+library(dplyr)
+library(ISLR)
+library(caret)
+library(carData)
+
+glm_volunteer <- glm(volunteer ~ sex+neuroticism*extraversion,
+                     data=Cowles, family=binomial)
+summary(glm_volunteer)
+```
+
+#### (a) Interpret the effect of sex on the odds of volunteering.
+
+
+\vspace{2cm}
+
+
+#### (b) Interpret the effect of extraversion on the odds of volunteering.
+
+\vspace{2cm}
+
+### Exercise 2: 
+
+Next class, we will be discussing hypothesis testing and model selection. Using what you know about hypothesis testing for proportions (STAT 140, also beginning of STAT 242) and your reading in Section 14.1.4, I would like you to consider the reliability of the hypothesis tests conducted by default in R in the summary for the GLM above. As in linear regression, the default hypotheses are $H_0: \beta_j=0$ versus $H_A: \beta_j\neq 0$. The hypothesis tests are conducted using the Wald statistic:
+
+$$
+Z_0=\frac{\hat{\beta}_j-0}{SE(\hat{\beta_j})}.
+$$
+
+The p-values that you see above come from the Normal(0,1) distribution. **Do you expect these p-values to be reasonable for assessing the strength of the relationship between the log odds of volunteering and each of the explanatory variables (and the interaction)?**
