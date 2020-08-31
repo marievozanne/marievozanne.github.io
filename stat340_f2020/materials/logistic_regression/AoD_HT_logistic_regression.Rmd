@@ -1,0 +1,173 @@
+---
+title: "Analysis of Deviance and Hypothesis Tests for Logistic Regression"
+subtitle: "STAT 340: Applied Regression"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Example: Crab species identification
+
+We will work with a data set about Leptograpsus crabs originally presented in
+
+Campbell, N.A. and Mahon, R.J. (1974) A multivariate study of variation in two species of rock crab of genus Leptograpsus. Australian Journal of Zoology 22, 417–425.
+
+They have also been discussed previously in
+
+Venables, W. N. and Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth edition. Springer.
+
+There are two species of this crab; we will examine the effect of certain physical dimenions on crab species.  The data we are working with contains 5 morphological measurements on 200 crabs, 100 each of two species of Leptograpsus crabs collected at Fremantle, W. Australia.
+
+The variables in this data set are as follows:
+
+ * `sp`: species - "B" or "O" for blue or orange.
+ * `sex`: the crab's sex
+ * `FL`: frontal lobe size (mm).
+ * `RW`: rear width (mm).
+ * `CL`: carapace length (mm).
+ * `CW`: carapace width (mm).
+ * `BD`: body depth (mm).
+ 
+ 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(MASS)
+library(ggplot2)
+library(dplyr)
+library(caret)
+set.seed(478)
+crabs <- MASS::crabs[sample.int(nrow(crabs)), ]
+crabs <- crabs %>% dplyr::select(-index)
+
+crabs <- crabs %>%
+  mutate(
+    sp_01 = ifelse(sp == "O", 1, 0)
+  )
+```
+
+## Hypothesis Testing for a Single Coefficient
+
+```{r}
+crabs_full <- glm(sp_01 ~ sex + FL + CL, data=crabs, family = binomial)
+summary(crabs_full)
+```
+
+Recall from your reading, the hypothesis test for a single coefficient is:
+
+$H_0:\beta_j=\beta_j^{(0)}$ versus $H_A: \beta_j\neq \beta_j^{(0)}$, and the corresponding test statistic is 
+
+$$Z_0=\frac{\hat{\beta}_j-\beta_j^{(0)}}{SE(\hat{\beta}_j)}$$
+where $Z_0\sim Normal(0,1)$. This is a Wald statistic.
+
+The corresponding confidence interval is 
+
+$$\hat{\beta}_j-z_{\alpha/2}\times SE(\hat{\beta}_j),$$
+
+where $z_{\alpha/2}$ is the critical value from the standard normal distribution with probability $\alpha/2$ to the right. 
+
+#### Hypothesis test 1: $H_0: \beta_{sex}=0$ vs. $H_A: \beta_{sex} \neq 0$
+
+\vspace{3cm}
+
+#### Hypothesis test 2: $H_0: \beta_{sex}=1$ vs. $H_A: \beta_{sex} \neq 1$
+
+\vspace{3cm}
+
+\newpage
+
+## Model Comparisons and Sequential Tests
+
+### Likelihood ratio test
+
+*Model 1* (Full model)
+
+$$
+logit(\pi)=\beta_0+{\color{red}{\beta_1}}x_1+{\color{red}{\beta_2}}x_2 + \cdots + {\color{red}{\beta_q}}x_q + \beta_{q+1}x_{q+1}+ \cdots + \beta_kx_k
+$$
+
+*Model 2* (Reduced model)
+
+$$
+logit(\pi)=\beta_0+{\color{red}{0}}x_1+{\color{red}{0}}x_2 + \cdots + {\color{red}{0}}x_q + \beta_{q+1}x_{q+1}+ \cdots + \beta_kx_k=\beta_0 + \beta_{q+1}x_{q+1}+ \cdots + \beta_kx_k
+$$
+
+- Likelihood ratio test statistic:
+
+$$G_0^2=2[\log(L_1)-\log(L_0)]$$
+
+where $L_1$ is the maximized likelihood for the full model and $L_0$ is the maximized likelihood for the reduced model.
+
+Under the null hypothesis ($H_0:\beta_1=\beta_2=\cdots =\beta_q=0$), $G_0^2\approx \chi^2_{q}$ for large $n$.
+
+```{r}
+## Fit null (intercept only) model
+crabs_null <- glm(sp_01 ~ 1, data=crabs, family = binomial)
+## Print summary
+summary(crabs_null)
+
+## Calculate log likelihood for the full model
+logL1 <- logLik(crabs_full)
+
+## Calculate the log likelihood for the null model
+logL0 <- logLik(crabs_null)
+
+## Calculate the likelihood ratio test statistic (this is G_0^2)
+2*(logL1-logL0)
+
+```
+
+
+### Analysis of Deviance
+
+```{r}
+## Compare full model and null (intercept only) model
+anova(crabs_null, crabs_full)
+```
+
+```{r}
+## Fit a reduced model (that is not the intercept only model, but is still nested)
+crabs_red <- glm(sp_01 ~ FL, data=crabs, family=binomial)
+
+## Compare full model and reduced model (nested models)
+anova(crabs_red, crabs_full)
+
+## Compare three models
+anova(crabs_null, crabs_red, crabs_full)
+```
+
+
+\newpage
+
+## Model Selection
+
+- We can use analysis of deviance (similar to analysis of variance) from above to compare *nested* models (one model is simplified version of the other). 
+
+- We can also use various information criterion, which are computed as functions of the likelihood. These can be used to compare non-nested models.
+    - $AIC=-2(\log L)+2k$, where $k$ is the number of parameters in the model
+    - $BIC=-2(\log L) + k\times \log(n)$, where $k$ is the number of parameters in the model
+    
+In both cases, smaller is better, and an AIC or BIC value has no meaning unless it is compared to that from another model. 
+
+```{r}
+## print summary for reduced model
+summary(crabs_red)
+
+## calculate AIC
+AIC(crabs_red)
+
+## calculate BIC
+BIC(crabs_red)
+```
+
+\newpage
+
+## References:
+
+N.A. Campbell and R.J. Mahon (1974) A multivariate study of variation in two species of rock crab of genus Leptograpsus. Australian Journal of Zoology 22, 417–425.
+
+J. Fox. 2016. \emph{Applied Regression Analysis and Generalized Linear Models}, 3rd Edition. Sage.
+
+J. Fox and S. Weisberg. 2019. \emph{An R Companion to Applied Regression}, 3rd Edition. Sage.
+
+F. Ramsey and D. Schafer. 2013. \emph{The Statistical Sleuth: A Course in Methods of Data Analysis}, 3rd Edition. Cengage.
