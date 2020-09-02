@@ -1,0 +1,58 @@
+---
+title: 'Class Activity: Hypothesis Testing and Model Selection'
+subtitle: 'STAT 340: Applied Regression'
+output:
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Women's Labor Force Participation (1976)
+
+The following data were drawn from the 1976 U.S. Panel Study of Income Dynamics; the response variable is married women's labor force participation.
+
+ * `lfp`: wife's labor force participation (factor, `no`, `yes`).
+ * `k5`: number of children ages 5 and younger (0-3, few 3s).
+ * `k618`: number of children ages 6 to 18 (0-8, few > 15).
+ * `age`: wife's age in years (30-60).
+ * `wc`: wife's college attendance (factor, `no`, `yes`).
+ * `hc`: husband's college attendance (factor, `no`, `yes`).
+ * `lwg`: log of wife's estimated wage rate.
+ * `inc`: family income excluding wife's income (\$1000s).
+
+```{r}
+library("car")
+
+## Fit model with all possible explanatory variables as main effects
+mroz.mod <- glm(lfp ~ k5 + k618 + age + wc + hc + lwg + inc, family=binomial(link=logit), data=Mroz)
+S(mroz.mod)
+
+## Fit model that excludes k5 and k618 (update can be used to fit a nested model)
+mroz.mod.2 <- update(mroz.mod, . ~ . - k5 - k618)
+S(mroz.mod.2)
+
+## The anova() function performs analysis of deviance, 
+## specifying test gives us a p-value
+anova(mroz.mod.2, mroz.mod, test="Chisq")
+
+## Linear hypothesis - computes general Wald chi-square tests:
+linearHypothesis(mroz.mod, c("k5", "k618"))
+linearHypothesis(mroz.mod, "k5=k618")
+```
+
+### (a) Write out the models associated with `mroz.mod` and `mroz.mod.2`, respectively.
+
+\vspace{3cm}
+
+### (b) Write down the null and alternative hypotheses associated with `anova(mroz.mod.2, mroz.mod, test="Chisq")`.
+
+\vspace{3cm}
+
+### (c) Test the hypothesis $H_0:\beta_{k5}=\beta_{k618}=0$ versus $H_A: \text{ at least one coefficient is not equal to 0}$. Interpret the result in the context of the problem.
+
+\vspace{3cm}
+
+### (d) The `S(model)` function prints the summary of the model fit (`summary(model)`), and it also gives us estimate effects (on the odds scale) and the associated 95\% confidence interval. Consider the estimated effect for `hc`, husband's college attendance (yes/no). Interpret the estimate and associated 95\% confidence interval in the context of the problem. This interpretation follows the structure of that for a linear model.
