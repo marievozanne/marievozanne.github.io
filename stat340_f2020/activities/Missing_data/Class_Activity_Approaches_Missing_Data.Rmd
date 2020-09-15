@@ -1,0 +1,68 @@
+---
+title: 'Class Activity: Approaches to Missing Data'
+subtitle: 'STAT 340: Applied Regression'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Consider the following data set, extracted from the 1974 *Motor Trend* US magazine, which summarizes fuel consumption and 10 characteristics of automobile design, as well as performance for 32 automobiles manufactured between 1973 and 1974. The variables are as follows:
+
+- `mpg`: miles/(US) gallon
+- `cyl`: number of cylinders
+- `disp`: displacement (cu. in.)
+- `hp`: gross horsepower
+- `drat`: rear axle ratio
+- `wt`: weight (1000 lbs)
+- `qsec`: 1/4 mile time
+- `vs`: engine (0=V-shaped, 1=straight)
+- `am`: transmission (0=automatic, 1=manual)
+- `gear`: number of forward gears
+- `carb`: number of carburetors
+
+
+
+```{r echo=FALSE}
+data("mtcars")
+
+set.seed(123124)
+
+## Create some missing data
+### MCAR
+mtcars1 <- mtcars
+mcar_idx1 <- rbinom(nrow(mtcars), 1, 0.1)
+mcar_idx2 <- rbinom(nrow(mtcars), 1, 0.2)
+mcar_idx3 <- rbinom(nrow(mtcars), 1, 0.15)
+
+mtcars1[mcar_idx1==1,]$mpg <- NA
+mtcars1[mcar_idx2==1,]$hp <- NA
+mtcars1[mcar_idx3==1,]$gear <- NA
+
+### MAR
+mtcars2 <- mtcars
+mar_idx1 <- rep(0, nrow(mtcars))
+mar_idx1[mtcars$wt > 4] <- rbinom(nrow(mtcars[mtcars$wt > 4,]), 1, 0.3)
+mar_idx1[mtcars$wt <= 4] <- rbinom(nrow(mtcars[mtcars$wt <= 4,]), 1, 0.1)
+mar_idx2 <- rbinom(nrow(mtcars), 1, 0.15)
+mar_idx3 <- rbinom(nrow(mtcars), 1, 0.2)
+
+mtcars2[mar_idx1==1,]$mpg <- NA
+mtcars2[mar_idx2==1,]$hp <- NA
+mtcars2[mar_idx3==1,]$gear <- NA
+  
+  
+### MNAR
+mtcars3 <- mtcars
+mnar_idx1 <- rep(0, nrow(mtcars))
+mnar_idx1[mtcars$mpg < 20] <- rbinom(nrow(mtcars[mtcars$mpg < 20,]), 1, 0.4)
+mnar_idx1[mtcars$mpg >= 20] <- rbinom(nrow(mtcars[mtcars$mpg >= 20,]), 1, 0.1)
+mnar_idx2 <- rbinom(nrow(mtcars), 1, 0.1)
+mnar_idx3 <- rbinom(nrow(mtcars), 1, 0.25)
+
+mtcars3[mnar_idx1==1,]$mpg <- NA
+mtcars3[mnar_idx2==1,]$hp <- NA
+mtcars3[mnar_idx3==1,]$gear <- NA
+```
+Each group will consider a different data set (`mtcars1`, `mtcars2`, or `mtcars3`) with missing data which I will assign at random. For each data set, implement the techniques for dealing with missing data that we have discussed, or assess the scenarios in which they are problematic to implement. Also comment on whether the method would be appropriate based on the missing data mechanism.

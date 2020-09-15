@@ -1,0 +1,68 @@
+---
+title: 'Class Activity: Introduction to Missing Data'
+subtitle: 'STAT 340: Applied Regression'
+output: pdf_document
+---
+
+For this activity, consider this data set on chemotherapy for Stage B/C colon cancer, available as `colon_s` from the `finalfit` package in R. The help page for this data set gives the following description: 
+
+"These are data from one of the first successful trials of adjuvant chemotherapy for colon cancer. Levamisole is a low-toxicity compound previously used to treat worm infestations in animals; 5-FU is a moderately toxic (as these things go) chemotherapy agent. There are two records per person, one for recurrence and one for death."
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(finalfit)
+```
+
+## Scenario 1
+
+Consider the following pairs plots. Decide whether the data appear to be MCAR, MAR, or MNAR. 
+
+```{r fig.align='center', echo=FALSE, warning=FALSE}
+# Create some extra missing data
+## Smoking missing completely at random
+set.seed(1)
+colon_s$smoking = 
+  sample(c("Smoker", "Non-smoker", NA), 
+    dim(colon_s)[1], replace=TRUE, 
+    prob = c(0.2, 0.7, 0.1)) %>% 
+  factor() %>% 
+    ff_label("Smoking")
+
+explanatory = c("age", "sex.factor", 
+  "nodes", "obstruct.factor",  
+  "smoking")
+dependent = "mort_5yr"
+colon_s %>% 
+  missing_pairs(dependent, explanatory)
+```
+
+
+## Scenario 2
+
+```{r fig.align='center', echo=FALSE, warning=FALSE}
+## Smoking missing conditional on patient sex
+colon_s$smoking[colon_s$sex.factor == "Female"] = 
+  sample(c("Smoker", "Non-smoker", NA), 
+    sum(colon_s$sex.factor == "Female"), 
+    replace = TRUE,
+    prob = c(0.1, 0.5, 0.4))
+
+colon_s$smoking[colon_s$sex.factor == "Male"] = 
+  sample(c("Smoker", "Non-smoker", NA), 
+    sum(colon_s$sex.factor == "Male"), 
+    replace=TRUE, prob = c(0.15, 0.75, 0.1))
+colon_s$smoking = factor(colon_s$smoking) %>% 
+    ff_label("Smoking")
+
+explanatory = c("age", "sex.factor", 
+  "nodes", "obstruct.factor",  
+  "smoking")
+dependent = "mort_5yr"
+colon_s %>% 
+  missing_pairs(dependent, explanatory)
+```
+
+Consider the following pairs plots. Decide whether the data appear to be MCAR, MAR, or MNAR. Support your conclusions with observations from the pairs plot.
