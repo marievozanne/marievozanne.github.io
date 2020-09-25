@@ -1,0 +1,331 @@
+Distance,Height ,Hand,Ball,Success,Student
+2,stand,under,paper,0,1
+2,stand,under,paper,1,1
+2,stand,under,paper,1,1
+2,stand ,under,paper,1,1
+2,stand,under,paper,0,1
+2,sit,under,paper,0,1
+2,sit,under,paper,1,1
+2,sit,under,paper,1,1
+2,sit,under,paper,1,1
+2,sit,under,paper,1,1
+4,stand,over,paper,0,1
+4,stand,over,paper,0,1
+4,stand,over,paper,1,1
+4,stand,under,paper,1,1
+4,stand,under,paper,1,1
+4,sit,under,paper,0,1
+4,sit,under,paper,1,1
+4,sit,under,paper,1,1
+4,sit,over,paper,0,1
+4,sit,over,paper,1,1
+8,stand,over,paper,0,1
+8,stand,over,paper,1,1
+8,stand,over,paper,1,1
+8,stand,under,paper,0,1
+8,stand,under,paper,0,1
+8,sit,over,paper,1,1
+8,sit,over,paper,0,1
+8,sit,over,paper,0,1
+8,sit,over,paper,1,1
+8,sit,over,paper,0,1
+2,,underhand,paper,Y,2
+2,,underhand,paper,Y,2
+2,,underhand,paper,Y,2
+2,,underhand,paper,N,2
+2,,underhand,paper,Y,2
+2,,overhand,tennis,Y,2
+2,,overhand,tennis,Y,2
+2,,overhand,tennis,Y,2
+2,,overhand,tennis,Y,2
+2,,overhand,tennis,Y,2
+4,,underhand,paper,N,2
+4,,underhand,paper,Y,2
+4,,underhand,paper,N,2
+4,,underhand,paper,Y,2
+4,,underhand,paper,Y,2
+4,,overhand,tennis,Y,2
+4,,overhand,tennis,N,2
+4,,overhand,tennis,Y,2
+4,,overhand,tennis,Y,2
+4,,overhand,tennis,Y,2
+8,,underhand,paper,Y,2
+8,,underhand,paper,N,2
+8,,underhand,paper,N,2
+8,,underhand,paper,Y,2
+8,,underhand,paper,Y,2
+8,,overhand,tennis,N,2
+8,,overhand,tennis,Y,2
+8,,overhand,tennis,N,2
+8,,overhand,tennis,Y,2
+8,,overhand,tennis,Y,2
+2,,under,tennis ball,1,3
+2,,under,bouncy ball,1,3
+2,,under,paper,1,3
+2,,under,tennis ball,1,3
+2,,under,bouncy ball,1,3
+2,,over,paper,1,3
+2,,over,tennis ball,1,3
+2,,over,bouncy ball,1,3
+2,,over,paper,1,3
+2,,over,tennis ball,1,3
+4,,under,bouncy ball,1,3
+4,,under,paper,0,3
+4,,under,tennis ball,1,3
+4,,under,bouncy ball,1,3
+4,,under,paper,1,3
+4,,over,tennis ball,0,3
+4,,over,bouncy ball,1,3
+4,,over,paper,0,3
+4,,over,tennis ball,1,3
+4,,over,bouncy ball,1,3
+8,,under,paper,0,3
+8,,under,tennis ball,1,3
+8,,under,bouncy ball,1,3
+8,,under,paper,1,3
+8,,under,tennis ball,1,3
+8,,over,bouncy ball,0,3
+8,,over,paper,0,3
+8,,over,tennis ball,1,3
+8,,over,bouncy ball,0,3
+8,,over,paper,0,3
+2,stand,,paper,1,4
+2,stand,,paper,1,4
+2,stand,,paper,1,4
+2,stand,,tennis,1,4
+2,stand,,tennis,1,4
+2,sit,,paper,1,4
+2,sit,,paper,1,4
+2,sit,,tennis,1,4
+2,sit,,tennis,0,4
+2,sit,,tennis,1,4
+4,stand,,paper,1,4
+4,stand,,paper,1,4
+4,stand,,tennis,0,4
+4,stand,,tennis,1,4
+4,stand,,tennis,0,4
+4,stand,,paper,1,4
+4,sit,,paper,0,4
+4,sit,,paper,1,4
+4,sit,,tennis,1,4
+4,sit,,tennis,0,4
+8,stand,,paper,1,4
+8,stand,,paper,0,4
+8,stand,,paper,0,4
+8,stand,,tennis,0,4
+8,stand,,tennis,0,4
+8,sit,,paper,0,4
+8,sit,,paper,0,4
+8,sit,,tennis,0,4
+8,sit,,tennis,0,4
+8,sit,,tennis,0,4
+2,stand,,paper,1,5
+2,stand,,paper,1,5
+2,stand,,paper,1,5
+2,stand,,wood block,1,5
+2,stand,,wood block,1,5
+2,sit,,paper,1,5
+2,sit,,paper,1,5
+2,sit,,wood block,1,5
+2,sit,,wood block,1,5
+2,sit,,wood block,1,5
+4,stand,,paper,1,5
+4,stand,,paper,1,5
+4,stand,,paper,1,5
+4,stand,,wood block,0,5
+4,stand,,wood block,1,5
+4,sit,,paper,1,5
+4,sit,,paper,0,5
+4,sit,,wood block,0,5
+4,sit,,wood block,1,5
+4,sit,,wood block,1,5
+8,stand,,paper,0,5
+8,stand,,paper,0,5
+8,stand,,paper,0,5
+8,stand,,wood block,1,5
+8,stand,,wood block,0,5
+8,sit,,paper,0,5
+8,sit,,paper,0,5
+8,sit,,wood block,0,5
+8,sit,,wood block,1,5
+8,sit,,wood block,1,5
+2,,over,paper,1,6
+2,,under,paper,1,6
+2,,over,paper,1,6
+2,,under,paper,1,6
+2,,over,paper,1,6
+2,,under,tennis,1,6
+2,,over,tennis,1,6
+2,,under,tennis,0,6
+2,,over,tennis,1,6
+2,,over,tennis,1,6
+4,,under,paper,0,6
+4,,under,paper,0,6
+4,,over,paper,1,6
+4,,over,paper,0,6
+4,,over,paper,1,6
+4,,over,tennis,1,6
+4,,over,tennis,1,6
+4,,under,tennis,1,6
+4,,under,tennis,0,6
+4,,under,tennis,0,6
+8,,under,paper,0,6
+8,,over,paper,0,6
+8,,over,paper,0,6
+8,,over,paper,0,6
+8,,under,paper,0,6
+8,,over,tennis,1,6
+8,,over,tennis,1,6
+8,,over,tennis,1,6
+8,,over,tennis,0,6
+8,,under,tennis,0,6
+2,stand,under,paper,1,7
+2,stand,under,paper,1,7
+2,stand,under,paper,1,7
+2,stand,under,paper,1,7
+2,stand,under,paper,1,7
+2,sit,under,paper,1,7
+2,sit,under,paper,0,7
+2,sit,under,paper,1,7
+2,sit,under,paper,1,7
+2,sit,under,paper,1,7
+4,stand,under,paper,1,7
+4,stand,under,paper,0,7
+4,stand,under,paper,0,7
+4,stand,under,paper,1,7
+4,stand,under,paper,1,7
+4,sit,under,paper,1,7
+4,sit,under,paper,0,7
+4,sit,under,paper,1,7
+4,sit,under,paper,0,7
+4,sit,under,paper,1,7
+8,stand,under,paper,1,7
+8,stand,under,paper,0,7
+8,stand,under,paper,0,7
+8,stand,under,paper,0,7
+8,stand,under,paper,0,7
+8,sit,under,paper,0,7
+8,sit,under,paper,0,7
+8,sit,under,paper,0,7
+8,sit,under,paper,0,7
+8,sit,under,paper,0,7
+2,stand,over,paper,1,7
+2,stand,over,paper,1,7
+2,stand,over,paper,1,7
+2,stand,over,paper,1,7
+2,stand,over,paper,1,7
+2,sit,over,paper,0,7
+2,sit,over,paper,1,7
+2,sit,over,paper,1,7
+2,sit,over,paper,1,7
+2,sit,over,paper,1,7
+4,stand,over,paper,1,7
+4,stand,over,paper,1,7
+4,stand,over,paper,1,7
+4,stand,over,paper,1,7
+4,stand,over,paper,1,7
+4,sit,over,paper,1,7
+4,sit,over,paper,0,7
+4,sit,over,paper,0,7
+4,sit,over,paper,1,7
+4,sit,over,paper,0,7
+8,stand,over,paper,1,7
+8,stand,over,paper,1,7
+8,stand,over,paper,0,7
+8,stand,over,paper,0,7
+8,stand,over,paper,0,7
+8,sit,over,paper,0,7
+8,sit,over,paper,0,7
+8,sit,over,paper,0,7
+8,sit,over,paper,0,7
+8,sit,over,paper,1,7
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+2,135,overhand,,1,8
+4,135,overhand,,1,8
+4,135,overhand,,0,8
+4,135,overhand,,1,8
+4,135,overhand,,0,8
+4,135,overhand,,1,8
+4,135,overhand,,0,8
+4,135,overhand,,0,8
+4,135,overhand,,0,8
+4,135,overhand,,1,8
+4,135,overhand,,1,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,0,8
+8,135,overhand,,1,8
+2,65,overhand,,1,8
+2,65,overhand,,1,8
+2,65,overhand,,1,8
+2,65,overhand,,1,8
+2,65,overhand,,0,8
+2,65,overhand,,1,8
+2,65,overhand,,1,8
+2,65,overhand,,0,8
+2,65,overhand,,0,8
+2,65,overhand,,1,8
+4,65,overhand,,0,8
+4,65,overhand,,1,8
+4,65,overhand,,0,8
+4,65,overhand,,0,8
+4,65,overhand,,0,8
+4,65,overhand,,0,8
+4,65,overhand,,1,8
+4,65,overhand,,0,8
+4,65,overhand,,0,8
+4,65,overhand,,1,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+8,65,overhand,,0,8
+2,135,underhand,,1,8
+2,135,underhand,,1,8
+2,135,underhand,,0,8
+2,135,underhand,,1,8
+2,135,underhand,,1,8
+2,135,underhand,,1,8
+2,135,underhand,,1,8
+2,135,underhand,,0,8
+2,135,underhand,,1,8
+2,135,underhand,,1,8
+4,135,underhand,,0,8
+4,135,underhand,,0,8
+4,135,underhand,,0,8
+4,135,underhand,,0,8
+4,135,underhand,,0,8
+4,135,underhand,,1,8
+4,135,underhand,,0,8
+4,135,underhand,,1,8
+4,135,underhand,,1,8
+4,135,underhand,,1,8
+8,135,underhand,,0,8
+8,135,underhand,,1,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
+8,135,underhand,,0,8
