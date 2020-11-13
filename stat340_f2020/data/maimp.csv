@@ -1,0 +1,52 @@
+"sample_state","Statename","MANo","GovOwn","PriOwn","GovValue_mil","PriOwn_mil","Total_mil"
+"AK","Alaska",1,1,0,5,0,5
+"AL","Alabama",1,1,0,186,0,186
+"AR","Arkansas",2,1,1,8,0.1,8
+"AZ","Arizona",0,0,0,0,0,0
+"CA","California",62,8,54,53,1200,1300
+"CO","Colorado",4,1,3,285,39,324
+"CT","Connecticut",1,0,1,0,1,1
+"DC","District of Columbia",1,0,1,0,13,13
+"DE","Delaware ",0,0,0,0,0,0
+"FL","Florida",6,1,5,6,15,21
+"GA","Georgia",3,1,2,14,16,30
+"HI","Hawaii",2,1,1,75,20,95
+"IA","Iowa",1,0,1,0,24,24
+"ID","Idaho",0,0,0,0,0,0
+"IL","Illinois",4,2,2,20,3,22
+"IN","Indiana",2,1,1,5,20,25
+"KS","Kansas",1,0,1,0,2600,2600
+"KY","Kentucky",0,0,0,0,0,0
+"LA","Louisiana",0,0,0,0,0,0
+"MA","Massachusetts",6,1,5,1200,600,1800
+"MD","Maryland",1,0,0,0,0,0
+"ME","Maine",0,0,0,0,0,0
+"MI","Michigan",15,4,11,555,166,721
+"MN","Minnesota",5,3,2,230,174,403
+"MO","Missouri",5,1,4,4,125,129
+"MS","Mississippi",0,0,0,0,0,0
+"MT","Montana",1,1,0,2,0,2
+"NC","North Carolina",7,1,6,1800,462,2200
+"ND","North Dakota",0,0,0,0,0,0
+"NE","Nebraska",1,0,1,0,1,1
+"NH","New Hampshire",4,2,2,140,11,151
+"NJ","New Jersey",8,1,7,1,299,300
+"NM","New Mexico",0,0,0,0,0,0
+"NV","Nevada",2,0,2,0,65,65
+"NY","New York",15,1,14,140,1200,1300
+"OH","Ohio",12,2,10,82,53,135
+"OK","Oklahoma",1,1,0,2400,0,2400
+"OR","Oregon",1,1,0,4,0,4
+"PA","Pennsylvania",2,1,1,8,9,17
+"RI","Rhodes Island",0,0,0,0,0,0
+"SC","South Carolina",3,0,3,0,33,33
+"SD","South Dakota",0,0,0,0,0,0
+"TN","Tennessee",3,0,3,0,31,31
+"TX","Texas",16,7,9,1500,226,1800
+"UT","Utah",1,0,1,0,5,5
+"VA","Virginia",5,2,3,1600,15,1600
+"VT","Vermont",0,0,0,0,0,0
+"WA","Washington",8,0,8,0,40,40
+"WI","Wisconsin",2,0,2,0,93,93
+"WV","West Virginia",1,0,1,0,5,5
+"WY","Wyoming",1,1,0,285,0,285
