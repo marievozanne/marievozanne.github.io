@@ -1,0 +1,159 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,parskip}
+\usepackage{bbm}
+\usepackage{cite}
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Spring 2022}
+\chead{STAT 242: Syllabus}
+\lhead{Marie Ozanne}
+\rfoot{Page \thepage}
+
+\usepackage{sectsty}
+
+\sectionfont{\fontsize{12}{15}\fontfamily{Logo}}
+ 
+\begin{document}
+
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\SD}{\mathrm{SD}}
+\newcommand{\SE}{\mathrm{SE}}
+\newcommand{\MSE}{\mathrm{MSE}}
+\newcommand{\Bernoulli}{\mathrm{Bernoulli}}
+\newcommand{\Beta}{\mathrm{Beta}}
+\newcommand{\Bias}{\mathrm{Bias}}
+\newcommand{\Binomial}{\mathrm{Binomial}}
+\newcommand{\Multinomial}{\mathrm{Multinomial}}
+\newcommand{\Normal}{\mathrm{Normal}}
+\newcommand{\Poisson}{\mathrm{Poisson}}
+\newcommand{\logit}{\mathrm{logit}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\IG}{\mathrm{IG}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\begin{center}
+\textbf{STAT 242: Intermediate Statistics}
+\end{center}
+
+%\vspace{1cm}
+
+\textcolor{blue}{\textsc{Course Information}}
+
+\begin{itemize}
+\item Meeting Time: MWF 1:45-3:00 PM, Clapp 402
+%\item Course Website: %\url{marievozanne.github.io/STAT_242_Homepage.html}
+\item Email: mozanne@mtholyoke.edu
+\item Office: 403 Clapp Laboratory
+\item Student Hours: I will hold regularly scheduled student hours each week at times to be selected by you. These times will be posted on the course website. You can also schedule appointments for additional office hours outside of these times via email!
+\item TAs: Sophia Jung (jung26s@mtholyoke.edu) and Willow Kelleigh (kelle23w@mtholyoke.edu) 
+\end{itemize}
+
+\vspace{2mm}
+
+\textcolor{blue}{\textsc{Textbook}}
+
+We will be using “The Statistical Sleuth” (3rd edition, ISBN 978-1133490678) by Ramsey and Schafer as the text for this class. A copy will be on reserve at the library. While this is a challenging book, it is nice for this class because it places an emphasis on working with real data and it gives a thorough treatment of the subject. We will not have time this semester to cover all of the material in the book in depth, but this is the sort of book that you can refer back to as you conduct data analyses in the future. For this class, the 2nd edition (ISBN 978-0534386702) can be used in place of the 3rd edition. Generally, the reading assignments for the 3rd and 2nd editions will be the same. I will let you know if there are any deviations. 
+
+\vspace{2mm}
+
+\textcolor{blue}{\textsc{Course Description}}
+
+If you are taking this course, it is because you may need to conduct a data analysis to answer a scientific question some day. This course will introduce you to the proper use
+of the most commonly used statistical models in applied data analyses, including ANOVA, multiple regression, and (if time allows) logistic regression. It includes methods for choosing, fitting,
+evaluating, comparing, and interpreting statistical models.
+
+\vspace{2mm}
+
+\textcolor{blue}{\textsc{Policies}}
+
+\paragraph{General Expectations:}
+\begin{itemize}
+\item All individuals should wear a snug-fitting, multi-layered mask over their nose and mouth in class (at all times). If someone forgets their mask, please remind them quickly and politely.
+\item Refrain from eating or drinking in our shared classroom space. If you need to do so, please step outside for a quick break.
+\item Abide by the \href{https://www.mtholyoke.edu/opening-gates/community-compact-students}{Community Compact}.
+\item Understand that this remains an uncertain and difficult time for many of us; generosity, grace, and kindness will help get us all through this. 
+\end{itemize}
+
+\paragraph{Attendance:}
+
+It is important to attend class regularly, unless you are sick. If you are sick, please let me know and stay home and rest. If there are extended absences for any reason, we will deal with these on a case-by-case basis.
+
+\paragraph{Collaboration} Much of this course will operate on a collaborative basis, and you are expected and encouraged to work together with a partner or in small groups to study, complete homework assignments, and prepare for exams. However, every word that you write must be your own. Copying and pasting sentences, paragraphs, or large blocks of R code from another student is not acceptable and will receive no credit or a penalty. No interaction with anyone but the instructor is allowed on any exams or quizzes. All students, staff and faculty are bound by the Mount Holyoke College Honor Code.
+
+In sum, \textbf{you are strongly encouraged to work together} on homeworks and labs. \emph{But,} \textbf{you must write up your answers yourself.} Cases of dishonesty, plagiarism, etc., will be reported.
+
+%\textbf{Extra help}: In addition to my scheduled office hours, office hours you schedule, or emails to me, there are other resources available to you. There will be drop-in student help hours one evening each week. The time and location for these will be posted on the course website. Your fellow students are also an excellent resource - remember that you can work on assignments and study with your classmates!
+
+%\newpage
+
+\textcolor{blue}{\textsc{Technology}}
+
+\paragraph{Computing with R:} Modern statistics can’t be done without computation. We will use the R statistical programming language in this course. R is one of the most commonly used programming languages in academic statistics, and I use it daily; it’s also very commonly used in statistics and data science positions in industry. Knowing R is a marketable skill. In this class, you will use R most days, and for many homework problems. I expect that you are familiar with R from previous classes, but I do not expect that you are an expert at R yet. That said, it is imperative  that you let me know if you are confused about anything we are doing in R as soon as possible.
+
+We will use R via RStudio. You can either download R and RStudio on your personal computer to work locally (encouraged) or you can use RStudio through Mount Holyoke's Server: \url{https://rstudio.mtholyoke.edu/}. Should you choose to do the former, make sure you have installed at least version 3.6.1 of R and the latest versions of any R libraries we use.
+
+It is important to \textbf{bring your laptop to class}; we will be using \texttt{R} nearly every day. Much of this work will be done in pairs, but we need to ensure that there are a sufficient number of computers. Also, it is good practice to code solutions yourself, too, even if you are working in a pair. Please let me know if this presents any issues; there are department laptops available for you to borrow.
+
+\vspace{2mm}
+
+\textcolor{blue}{\textsc{Assignments}}
+
+\paragraph{Schedule:} A schedule for this class will be regularly updated on the course website. Please refer to it regularly. 
+ 
+\paragraph{Participation and Labs:} The best way to learn statistics is to do statistics. For that reason, you will have an opportunity to put the methods we are discussing to use nearly every day in worksheets and labs. Sometimes I will ask you to complete and submit these labs for credit. I may also occasionally ask you to complete small assignments at home that are not large enough to merit being counted as separate homework assignments. These labs and small assignments will be graded for completion only.
+
+\paragraph{Homework:} Homework is the most effective way to reinforce concepts learned in class. There will be regular homework assignments. Homework assignments will generally include a computational component and a written component. \textcolor{blue}{\emph{Weekly homework assignments will be due on Wednesday. To incorporate some flexibility into the homework submission process, there will be a three day grace period, during which you may hand in late assignments without penalty.}} Longer extentions may be possible, but need to be requested well before the deadline. Please do your best to adhere to the regular deadline throughout the semester so that the grader can return your work to you in a timely manner. \textcolor{blue}{\emph{The lowest homework grade will be dropped.}} 
+
+\paragraph{Quizzes:} We will have a \textcolor{blue}{\emph{short quiz two days each week}} (other than weeks with exams). The questions for these quizzes will be selected at random from a bank of quiz questions that you will have access to on the course website. We will add to this bank of questions every week. One quiz each week will be on material covered that week or the previous week the other will be drawn from the full list of possible questions. At all times, you will have a list of all possible quiz questions and their solutions available to you. I suggest that you review this bank of questions for a few minutes each day. These quizzes are designed to encourage you to study continuously throughout the semester, not to intimidate or scare you. \textcolor{blue}{\emph{The lowest 3 quiz grades will be dropped.}}
+
+\paragraph{Exams:} There likely will be two exams during the semester, as well as a final exam during the exam period. I haven't decided yet whether the exams will be in class, take home, or a mixture of in class and take home. 
+
+\paragraph{Mini Project:} In small groups (2-3 students), you will complete a mini-project in the last third of the semester. This will not be an extended project; it will probably require about as much work as 2 homework assignments.  \textcolor{blue}{\emph{You will deliver a group presentation of your analysis in class. You will also each turn in a self-reflection and a group reflection.}} Additional details will be posted on the class website later in the semester.
+
+%It will be more self-directed than the homework assignments; you will choose a data set you are interested in and conduct a statistical analysis of that data set to answer a scientific question.
+
+\paragraph{Writing:} Your ability to communicate results, which may be technical in nature, to your audience, which is likely to be non-technical, is critical to your success as a data analyst. The assignments in this class will place emphasis on the clarity of your writing. That said, we are all constantly improving at writing. Your classmates and I are here to help you improve as a writer.
+
+%\textbf{Extra Credit}: Extra credit is available in several ways: attending an out-of-class lecture (as will be announced) and writing a short review of it; pointing out a substantial mistake in the book, a homework exercise, an exam solution, or something I present in class; drawing my attention to an interesting data set or news article; etc. The extra credit is applied when a student is near the boundary of a letter grade.
+
+\paragraph{Grading:} When grading your written work, I am looking for solutions that are technically correct and reasoning that is clearly explained. \emph{Numerically correct answers, alone, are not sufficient} on homework, tests, or quizzes. Neatness and organization are valued, with brief, clear answers that explain your thinking. If the grader or I cannot read or follow your work, then we cannot give you full credit for it. Your grade for this course will be a weighted average of the following components:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l r}
+Item & Weight\\
+\hline
+Participation and Labs & 5\%\\
+Quizzes & 20\%\\
+Homework & 20\%\\
+Exams & 40\%\\
+Mini-Project & 15\%\\
+\hline
+Total & 100\%
+\end{tabular}
+\end{table}
+
+\textcolor{blue}{\textsc{Accommodations}}
+
+\paragraph{Academic Accommodations:} AccessAbility Services is the office on campus that determines academic accommodations for students with disabilities. If you need official accommodations through AccessAbility Services, you have a right to have these met and kept confidential. Please contact AccessAbility Services, located in Mary Lyon Hall 3rd Floor, at 413-538-2634 or accessability-services@mtholyoke.edu. If you are eligible for academic accommodations, you will be provided with an accommodation letter. Once you receive your accommodation letter, I would like to meet with you and discuss these approved accommodations and our class. For more information on who might be eligible for accommodations and the application process please see the AccessAbility Services website (\url{www.mtholyoke.edu/accessability}).
+
+\paragraph{Religious Accommodations:} In support of our religiously diverse student population, students may miss a class, obtain an extension on an assignment, or reschedule an exam if there is a conflict with a religious high holiday or observance. Students should \textbf{notify me at the beginning of the semester if a religious observance will require special accommodation}. 
+
+\paragraph{Audio/Visual Recording Policy:} To encourage active engagement and academic inquiry in the classroom, as well as to safeguard the privacy of students and faculty, no form of audio or visual recording in the classroom is permitted without explicit permission from the professor/instructor or without a letter from AccessAbility Services, signed by the faculty member, authorizing the recording as an accommodation. Authorized recordings may only be used by the student who has obtained permission and may not be shared or distributed for any reason. Violation of this policy is an infraction of the Mount Holyoke Honor Code and academic regulations and will result in disciplinary action.
+
+\end{document}
